@@ -34,8 +34,14 @@ body {
 
 .sticky {
   position: fixed;
-  background-color: rgba(243, 243, 243, 0.8);
+  background-color: inherit;
+  opacity: 0.8;
+  color: white;
   width: 85%;
+}
+
+.sticky a:visited {
+  color: #aaaaaa;
 }
 
 .left {
@@ -93,7 +99,7 @@ a:hover {
 
 /* selected link */
 a:active {
-  color: blue;
+  color: #4bbb7d;
 }
 
 #open-account {
