@@ -19,6 +19,7 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  font-family: "Poppins", sans-serif;
 }
 
 /* Navigation bar */
@@ -29,7 +30,7 @@ body {
   align-items: center;
   gap: 50px;
   margin: 30px 90px;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .sticky {
@@ -122,7 +123,7 @@ a:active {
 }
 
 .item.h h1 {
-  font-size: 5rem;
+  font-size: 4rem;
 }
 
 .item.t {
@@ -131,9 +132,16 @@ a:active {
   font-size: 2rem;
 }
 
+.item.t h4 {
+  font-weight: 400;
+}
+
 .item.ref {
   grid-row: 3;
   grid-column: 1;
+  padding: 15px 0px;
+  text-decoration: underline;
+  color: #4bbb7d;
 }
 
 .item.image {
@@ -183,7 +191,7 @@ a:active {
 
 .hidden {
   opacity: 0;
-  transform: translateY(4rem);
+  transform: translateY(2rem);
 }
 
 .section-explained {
@@ -218,7 +226,7 @@ a:active {
 }
 
 .card-img img {
-  width: 400px;
+  width: 80%;
   height: auto;
 }
 
@@ -231,35 +239,67 @@ a:active {
 
 .card-icon {
   grid-column: 2 / 3;
+  display: flex;
+  align-items: center;
 }
 
 .rev .card-icon {
   grid-column: 1 / 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .card-subheader {
   grid-column: 2 / 3;
   grid-row: 2 / 3;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
 }
 
 .rev .card-subheader {
   grid-column: 1 / 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .card-text {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
 }
 
 .rev .card-text {
   grid-column: 1 / 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: end;
+}
+
+svg {
+  width: 50px;
+  height: 50px;
+}
+
+div > svg {
+  background-color: #d4e9d8;
+  border-radius: 50%;
+  padding: 0px 15px;
 }
 
 @media (max-width: 780px) {
   .section {
     padding: 60px 15px;
     max-width: 667px;
+  }
+
+  .section-header {
+    font-size: 2.4rem;
   }
 
   .card-img img,
@@ -467,6 +507,28 @@ button {
   button {
     font-size: 0.8rem;
   }
+
+  .left-btn,
+  .right-btn {
+    min-width: 15px;
+    max-width: 15px;
+    height: auto;
+    font-size: 1rem;
+  }
+
+  .person h5 {
+    font-size: 0.8rem;
+  }
+
+  .person p {
+    font-size: 0.5rem;
+  }
+
+  .person--image > img {
+    height: 45px;
+    width: auto;
+    border-radius: 50%;
+  }
 }
 
 /* Open account and Footer */
@@ -486,7 +548,7 @@ button {
 
 .dark h1 {
   color: white;
-  font-size: 3.5rem;
+  font-size: 3rem;
   text-align: center;
 }
 
@@ -520,7 +582,20 @@ footer {
   font-size: 3rem;
 }
 
+.footer__logo {
+  width: 50px;
+}
+
+.footer__logo.dark {
+  background-color: #37383e;
+  opacity: 0.5;
+}
+
 @media (max-width: 780px) {
+  .dark h1 {
+    font-size: 2rem;
+  }
+
   .dark button {
     width: fit-content;
     font-size: 0.8rem;

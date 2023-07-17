@@ -83,26 +83,31 @@ sections.forEach((section) => {
 });
 
 // sticky nav bar when outside the hero area
-const hero = document.querySelector(".hero");
-const navHeight = document
-  .querySelector(".navigbar")
-  .getBoundingClientRect().height;
-console.log(navHeight);
+// const hero = document.querySelector(".hero");
+// const navHeight = document
+//   .querySelector(".navigbar")
+//   .getBoundingClientRect().height;
 
-const stickyNavOpts = {
-  root: null,
-  threshold: 0,
-  rootMargin: `-${navHeight}px`,
-};
+// const stickyNavOpts = {
+//   root: null,
+//   threshold: 0,
+//   rootMargin: `-${navHeight}px`,
+// };
 
-const stickyNavAppears = function (entries) {
-  const entry = entries[0];
-  console.log(entry);
+// const stickyNavAppears = function (entries) {
+//   const entry = entries[0];
 
-  if (!entry.isIntersecting)
-    document.querySelector(".navigbar").classList.add("sticky");
-  else document.querySelector(".navigbar").classList.remove("sticky");
-};
+//   if (!entry.isIntersecting)
+//     document.querySelector(".navigbar").classList.add("sticky");
+//   else document.querySelector(".navigbar").classList.remove("sticky");
+// };
 
-const navObserver = new IntersectionObserver(stickyNavAppears, stickyNavOpts);
-navObserver.observe(hero);
+// const navObserver = new IntersectionObserver(stickyNavAppears, stickyNavOpts);
+// navObserver.observe(hero);
+
+// document.querySelectorAll(".nav__to").forEach((link) => {
+//   link.addEventListener("click", function (e) {
+//     const dest = e.target.getAttribute("href");
+//     document.querySelector(dest).scrollIntoView({ behavior: "smooth" });
+//   });
+// });
