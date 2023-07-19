@@ -64,7 +64,7 @@ body {
 }
 
 @media (max-width: 780px) {
-  html {
+  body {
     width: 110%;
   }
 
