@@ -64,6 +64,10 @@ body {
 }
 
 @media (max-width: 780px) {
+  html {
+    width: 110%;
+  }
+
   .navigbar {
     max-width: 375px;
     justify-content: center;
