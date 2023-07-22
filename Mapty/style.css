@@ -1,0 +1,231 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.75%;
+  background-color: gray;
+}
+
+.side {
+  height: 92vh;
+}
+
+.side--left {
+  flex: 0.35;
+  background-color: #2d3439;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 3%;
+}
+
+.workouts__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 25px;
+
+  margin: 10% 0%;
+  min-height: 60vh;
+  overflow-y: scroll;
+}
+
+.workout {
+  padding: 5%;
+  background-color: #445058;
+  border-radius: 10px;
+}
+
+.workout__registered,
+.workouts__displayed {
+  width: fit-content;
+  padding: 10px 25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+h2 {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.activity__description--data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  min-width: max-content;
+
+  font-size: 0.8rem;
+}
+
+.workout__form {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+input[type="text"],
+select {
+  width: 85%;
+  /* min-width: 55px; */
+  border-radius: 2px;
+  padding: 3px;
+  /* no blue outline */
+  outline: none;
+}
+
+#activity__type--label {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+}
+
+#activity__type {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+}
+
+#duration--label {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+
+#duration {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+}
+
+#distance--label {
+  grid-row: 1 / 2;
+  grid-column: 3 / 4;
+}
+
+#distance {
+  grid-row: 1 / 2;
+  grid-column: 4 / 5;
+}
+
+#cadence--label {
+  grid-row: 2 / 3;
+  grid-column: 3 / 4;
+}
+
+#cadence {
+  grid-row: 2 / 3;
+  grid-column: 4 / 5;
+}
+
+#elevation--label {
+  grid-row: 2 / 3;
+  grid-column: 3 / 4;
+  min-width: max-content;
+}
+
+#elevation {
+  grid-row: 2 / 3;
+  grid-column: 4 / 5;
+}
+
+.hidden {
+  display: none;
+}
+
+.not--displayed {
+  opacity: 0;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgb(154, 154, 154);
+}
+
+.side--right {
+  flex: 0.65;
+  background-color: #aaaaaa;
+}
+
+.leaflet-popup-content {
+  min-width: max-content;
+}
+
+@media (max-width: 900px) {
+  .leaflet-container {
+    position: static;
+  }
+
+  main {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+
+    font-size: 0.4rem;
+  }
+
+  .activity__description--data,
+  footer {
+    font-size: 0.4rem;
+  }
+
+  .activity__type,
+  input,
+  label,
+  footer .workout {
+    font-size: 0.6rem;
+  }
+
+  h1 {
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 0.7rem;
+  }
+
+  .side--left {
+    flex: 0.2;
+    width: 100%;
+    gap: 1%;
+  }
+
+  .workouts__container {
+    min-height: auto;
+    max-height: 70%;
+    margin: 5% 0%;
+  }
+
+  .workout__form {
+    width: 80%;
+    height: fit-content;
+    padding: 10px;
+    gap: 5px;
+  }
+
+  .side--right {
+    flex: 0.8;
+    width: 100%;
+  }
+}

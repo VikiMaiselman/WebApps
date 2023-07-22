@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      defer
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <script defer src="./index.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+    <title>Workouts on Map</title>
+  </head>
+
+  <body>
+    <main>
+      <div class="side side--left">
+        <div class="header">
+          <h1>🌍 Mapty</h1>
+        </div>
+
+        <div class="workouts__container">
+          <form action="" class="workout workout__form hidden">
+            <label id="activity__type--label" for="activity__type">Type</label>
+            <select
+              id="activity__type"
+              class="activity__type"
+              name="activity__type"
+            >
+              <option class="running selected" selected>Running</option>
+              <option class="cycling">Cycling</option>
+            </select>
+
+            <label id="duration--label" for="duration">Duration</label>
+            <input
+              type="text"
+              name="duration"
+              id="duration"
+              class="duration"
+              placeholder="min"
+            />
+
+            <label id="distance--label" for="distance">Distance</label>
+            <input type="text" name="distance" id="distance" placeholder="km" />
+
+            <label id="cadence--label" for="cadence" class="cadence"
+              >Cadence</label
+            >
+            <input
+              type="text"
+              name="cadence"
+              id="cadence"
+              class="cadence"
+              placeholder="steps/min"
+            />
+
+            <label
+              id="elevation--label"
+              for="elevation"
+              class="elevation hidden"
+              >Elev. Gain</label
+            >
+            <input
+              type="text"
+              name="elevation"
+              id="elevation"
+              class="elevation hidden"
+              placeholder="m"
+            />
+
+            <input type="submit" hidden />
+          </form>
+
+          <div class="workouts__displayed">
+            <!-- <div class="workout workout__registered hidden" data-id="">
+            <div class="activity__description--header"></div>
+            <div class="activity__description--data">
+              <div class="activity__type"></div>
+              <div class="duration"></div>
+              <div class="distance"></div>
+              <div class="third"></div>
+            </div>
+          </div> -->
+          </div>
+        </div>
+
+        <footer>
+          © Copyright by Jonas Schmedtmann. With changes. Use for learning or
+          your portfolio.
+        </footer>
+      </div>
+      <div class="side side--right" id="side--right"></div>
+    </main>
+  </body>
+</html>
