@@ -4,10 +4,94 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #b79286;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .bottom {
+        background-color: #fbe9e6;
+        height: 100%;
+        width: 60%;
+        position: absolute;
+        z-index: -1;
+        bottom: 0;
+        box-shadow: 0 0 3px 1px #fbe9e6;
+      }
+
+      .projects {
+        width: 80%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 2.5%;
+        padding: 2.5%;
+        margin: 2.5%;
+      }
+
+      a {
+        display: flex;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: black;
+        font-weight: 100;
+        text-decoration: 0.1px underline dotted;
+      }
+
+      a:hover,
+      a:visited {
+        font-weight: 400;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      @media (max-width: 500px) {
+        .projects {
+          width: 60%;
+        }
+      }
+
+      @media (min-width: 750px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        a {
+          font-size: 1.8rem;
+        }
+      }
+    </style>
     <title>All WebDev Projects</title>
   </head>
   <body>
-    <a href="./Banking Webpage/index.html">Banking website</a>
-    <a href="./Mapty/">Map with workouts</a>
+    <div class="bottom"></div>
+
+    <div class="projects">
+      <h1>WebDev Projects List</h1>
+      <div>
+        <a href="./Banking Webpage/index.html">Banking website</a>
+      </div>
+
+      <div>
+        <a href="./Mapty/">Map with workouts</a>
+      </div>
+    </div>
   </body>
 </html>
