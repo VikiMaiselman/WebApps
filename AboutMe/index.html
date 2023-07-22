@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>About Viki</title>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-sm bg-body-tertiary rounded"
+      aria-label="Eleventh navbar example"
+    >
+      <div class="container-fluid mx-2">
+        <a class="navbar-brand" href="./documents/Victoria_CV.pdf">Download CV</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarsExample09"
+          aria-controls="navbarsExample09"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample09">
+          <form role="search">
+            <input
+              class="form-control"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </form>
+          <ul class="navbar-nav ms-auto me-2 mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#professional">Resume</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact-me">Contact</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- A brief introduction -->
+    <div class="container col-xxl-8 px-4 py-5">
+      <div
+        class="row flex-lg-row-reverse align-items-end justify-content-start g-5 py-5"
+      >
+        <div class="col-10 col-sm-8 col-lg-6 my-lg-auto">
+          <img
+            src="./images/viki.jpg"
+            class="d-block mx-lg-auto img-fluid"
+            alt="Photo of Victoria"
+            width="400"
+            height="200"
+            loading="lazy"
+          />
+        </div>
+        <div class="col-lg-6">
+          <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">
+            Hi, I am Victoria Maiselman.
+          </h1>
+          <p class="lead">
+            I am a Medical Doctor and a Software Engineer, who takes the best of
+            both worlds.
+          </p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-lg px-4 me-md-2">
+            <a href="#professional">Learn more</a>
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-lg px-4">
+              <a href="#contact-me">Contact me</a>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-lg about-text px-0">
+        <p>
+          A 28-year-old software developer who studied and worked in the
+          field of medicine for about 10 years before making a major career change. Today I have an experience of about a year working as a Junior Software Developer. </br>
+          I am eager to apply my experience, learn new things and work on challenging problems to create high-quality software solutions that would make people's life better.
+         <br>
+          I am passionate about technology, research, medicine and everything in between. <br> 
+          
+          I am alo keen on dancing Hip-Hop and Dancehall,
+          reading fiction and making long walks. <br>
+    
+        </p>
+      </div>
+    </div>
+
+    <!-- Professional experience and education -->
+    <div class="container-sm py-2 px-0" id="professional">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link px-4 active"
+            id="home-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#home-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="home-tab-pane"
+            aria-selected="true"
+          >
+            Software Engineering
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#profile-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="profile-tab-pane"
+            aria-selected="false"
+          >
+            Medicine
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="contact-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#contact-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="contact-tab-pane"
+            aria-selected="false"
+          >
+            Languages
+          </button>
+        </li>
+        <li class="nav-item" role="presentation"></li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane px-3 fade show active"
+          id="home-tab-pane"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+          tabindex="0"
+        >
+          <div class="container-sm pb-1 pt-3 px-0 mt-3 resume-subcluster">
+            <h6>Professional Experience</h6>
+          </div>
+
+          <div class="container-sm px-0 mx-0 mt-4">
+            <h3 class="container-sm px-0">Software Engineer</h3>
+            <h6 class="container-sm mt-1 px-0">
+              Kyndryl Israel | December 2022 - Now
+            </h6>
+            <ul class="container-sm mt-1 mb-5 mx-3">
+              <li>Work on an internal RESTful API project in Django in the field of self-service applications that automates management and orchestration of external IT resources (and developed 3 new user-facing features).</li>
+              <li>Test software for bugs and operating speed, which in the best case lead to the efficiency improvement of over 25%.</li>
+              <li>
+                Work on another internal self-service project to improve the IT management and orchestration of Cloud environment and virtual appliances (VMware).
+              </li>
+              <li>Introduced 2 new features into the GUI of the internal self-service applications (JS-React).</li>
+            </ul>
+          </div>
+
+          <div class="container-sm pb-1 pt-5 px-0 mt-3 resume-subcluster">
+            <h6>Education</h6>
+          </div>
+
+          <div class="container-sm px-0 mx-0 mt-4">
+            <h3 class="container-sm px-0">Infinity Labs R&D, Israel</h3>
+            <h6 class="container-sm mt-1 px-0">March 2022 - December 2022</h6>
+            <ul class="container-sm mt-1 mb-5 mx-3">
+              <li>A well-known, educational course for learning Software Development with a focus on C and Java programming languages</li>
+        
+              <li><a href="https://git.infinitylabs.co.il/ilrd/ramat-gan/fs125-6/victoria.maiselman">C && Java Projects</a></li>
+            </ul>
+
+            <h3 class="container-sm px-0">Relevant Courses, Udemy</h3>
+            <h6 class="container-sm mt-1 px-0">Sinse October 2022</h6>
+            <ul class="container-sm mt-1 mb-5 mx-3">
+              <li>The Complete 2023 Web Development Bootcamp by Dr. A.Yu</li>
+              <li>The Complete JavaScript Course 2023: From Zero to Expert! by J.Schmedtmann
+            </li>
+            <li>Python 3: Deep Dive series (4 parts) by Dr. F.Baptiste</li>
+            <li>Python and Django Full Stack Web Developer Bootcamp by J.Portilla</li>
+            </ul>
+          </div>
+
+          <div class="container-sm pb-1 pt-5 px-0 mt-3 resume-subcluster">
+            <h6>Skills && Expertise in</h6>
+          </div>
+
+          <div class="container-sm px-0 mx-0 mt-4">
+            <h3 class="container-sm px-0">Computer Science</h3>
+            <ul class="container-sm mt-1 mb-5 mx-3 pb-3">
+              <li>Python, Django, Flask</li>
+              <li>JS, Node.js, React</li>
+              <li>Docker, Kubernetes, CI/CD</li>
+              <li>C, Linux, Bash shell</li>
+              <li>Java</li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade px-3"
+          id="profile-tab-pane"
+          role="tabpanel"
+          aria-labelledby="profile-tab"
+          tabindex="0"
+        >
+          <div class="container-sm pb-1 pt-3 px-0 mt-3 resume-subcluster">
+            <h6>Professional Experience</h6>
+          </div>
+
+          <div class="container-sm px-0 mx-0 mt-4">
+            <h3 class="container-sm px-0">
+              Medical Doctor, Internal Medicine Resident
+            </h3>
+            <h6 class="container-sm mt-1 px-0">
+              Sheba, Tel A Shomer | March 2021 - March 2022
+            </h6>
+            <ul class="container-sm mt-1 mb-5 mx-3">
+              <li>Diagnosed, treated and managed a broad variety of medical conditions in different clinical settings in the internal medicine ward.</li>
+              <li>Treat and manage patients in the Coronavirus Department.</li>
+              <li>
+                Delivered presentations on the latest research papers to collegues and medical students.
+              </li>
+            </ul>
+
+            <h3 class="container-sm px-0">Medical Intern</h3>
+            <h6 class="container-sm mt-1 px-0">
+              Sheba, Tel A Shomer | November 2019 - November 2020
+            </h6>
+            <ul class="container-sm mt-1 mb-5 mx-4">
+              <li>Completed rotations in different departments including internal medicine, neurology, surgery, ER, pediatrics and pediatric hematooncology as a medical intern.</li>
+              <li>Worked in different clinical settings with various medical teams.</li>
+              <li>
+                Gathered information, diagnosed and prescribed treatment to patients under the supervision of senior medical doctors.
+              </li>
+            </ul>
+          </div>
+
+          <div class="container-sm pb-1 pt-5 px-0 mt-3 resume-subcluster">
+            <h6>Education</h6>
+          </div>
+
+          <div class="container-sm px-0 mx-0 mt-4">
+            <h3 class="container-sm px-0">
+              First State Moscow Medical University (Sechenov University)
+            </h3>
+            <h6 class="container-sm mt-1 px-0">September 2012 - August 2018</h6>
+            <ul class="container-sm mt-1 mb-5 mx-3">
+              <li>The Faculty of General Medicine</li>
+            </ul>
+          </div>
+
+          <div class="container-sm pb-1 pt-5 px-0 mt-3 resume-subcluster">
+            <h6>Skills && Expertise in</h6>
+          </div>
+
+          <div class="container-sm px-0 mx-0 mt-4">
+            <h3 class="container-sm px-0">Medicine</h3>
+            <ul class="container-sm mt-1 mb-5 mx-3 py-3">
+              <li>Management of various clinical conditions</li>
+              <li>Phlebotomy</li>
+              <li>CVC insertion</li>
+              <li>POCUS (Bedside Portable Ultrasound, or Point-of-Care Ultrasound)</li>
+              <li>Intubation</li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade px-3"
+          id="contact-tab-pane"
+          role="tabpanel"
+          aria-labelledby="contact-tab"
+          tabindex="0"
+        >
+          <div class="container-sm pb-1 pt-3 px-0 mt-3 resume-subcluster">
+            <h6>Skills && Expertise</h6>
+          </div>
+
+          <div class="container-sm px-0 mx-0 mt-4">
+            <h3 class="container-sm px-0 mb-4">
+              Hebrew | <span class="lang">Fluent</span>
+            </h3>
+
+            <h3 class="container-sm px-0 mb-4">
+              English | <span class="lang">Fluent</span>
+            </h3>
+
+            <h3 class="container-sm px-0 mb-4">
+              Russian | <span class="lang" id="native">Native</span>
+            </h3>
+
+            <h3 class="container-sm px-0 mb-4">
+              Spanish | <span class="lang">Fluent</span>
+            </h3>
+
+            <h3 class="container-sm px-0 mb-4">
+              Italian | <span class="lang acquaintance">Basic</span>
+            </h3>
+
+            <h3 class="container-sm px-0 mb-4 pb-3">
+              German | <span class="lang acquaintance">Basic</span>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- A section that showcases projects -->
+    <div id="carouselExampleIndicators" class="carousel slide">
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="p-5 my-4 mx-5 bg-body-tertiary border rounded-3">
+            <div class="container-fluid py-5">
+              <h1 class="display-5 fw-bold">Project #1</h1>
+              <p class="col-md-8 fs-5">
+                A thread pool in Java. <br>
+                A model, in which a dedicated data structure maintains multiple threads waiting for tasks to be allocated. <br>
+                Implements Executor interface, but provides custom functionality of ExecutorService.
+              </p>
+              <!-- <button class="btn btn-primary btn-lg" type="button">
+                Example button
+              </button> -->
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="p-5 my-4 mx-5 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+              <h1 class="display-5 fw-bold">Project #2</h1>
+              <p class="col-md-8 fs-5">
+                E-commerce website | In progress
+              </p>
+              <!-- <button class="btn btn-primary btn-lg" type="button">
+                Example button
+              </button> -->
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="p-5 my-4 mx-5 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+              <h1 class="display-5 fw-bold">Project #3</h1>
+              <p class="col-md-8 fs-5">
+                Med app for scanning medical documents and performing comprehensive calculations on the numeric data | In progress
+              </p>
+              <!-- <button class="btn btn-primary btn-lg" type="button">
+                Example button
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <!-- A contact me section-->
+    <div class="container-fluid px-0 py-5 my-4 bg-body-tertiary rounded-3" id="contacts">
+        <div class="container-fluid py-5 my-4 mx-5 px-0 bg-body-tertiary rounded-3" style="border: 2px solid #e8ccc2;">
+            <div class="container-sm pb-1 pt-2 mt-3 mx-5 px-3 resume-subcluster" id="contact-me">
+                <h6>Contact Me</h6>
+            </div>
+    
+            <div class="container-sm pb-1 pt-1 mx-5 px-3 resume-subcluster"> 
+                <div class="container-sm px-0 mx-0 mt-4">
+                    <h6 class="container-sm mt-1 px-0">Telephone: </h6>
+                    <p>+972-58-663-4445</p>
+                    <h6 class="container-sm mt-1 px-0">Email: </h6>
+                    <p><a href="mailto:maiselmanwikki@gmail.com">maiselmanwikki@gmail.com</a></p>
+                    <h6 class="container-sm mt-1 px-0">LinkedIn: </h6>
+                    <p><a href="https://www.linkedin.com/in/victoria-maiselman-552b29255/">Victoria Maiselman</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="bg"></div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
