@@ -7,6 +7,7 @@ let workoutsContainer, form, formRegistered, activitiesMenu,
 let map, mapEvent;
 
 let workouts = [];
+const markers = [];
 
 function init() {
   workoutsContainer = document.querySelector(".workouts__displayed");
@@ -56,7 +57,7 @@ function loadMap(position) {
 }
 
 function addActionOnMapClick() {
-  // instead of a regulat eventListener
+  // instead of a regular eventListener
   // document.querySelector(".side--right").addEventListener("click", (e) => {
   map.on("click", (e) => {
     mapEvent = e;
@@ -97,13 +98,18 @@ function addActionOnFormSubmission(form) {
     const headerMessage = computeHeaderOfWorkout();
     const formHTML = `
         <div class="workout workout__registered" data-id="${id}">
-            <div class="activity__description--header"><h2>${headerMessage}</h2></div>
-            <div class="activity__description--data">
+            <div class="activity activity__description--header"><h2>${headerMessage}</h2></div>
+            <div class="activity activity__description--data">
               <div class="activity__type">🏅🏅</div> 
               <div class="duration">${dur} min </div>
               <div class="distance">${dist} km </div>
               <div class="third">${elev ? elev + " m" : cad + " spm"}</div>
             </div> 
+            <div class="activity actions--on__workout">
+              <button class="on__workout edit">Edit</button>
+              <button class="on__workout delete">Delete</button>
+              <button class="on__workout delete_all">Delete All</button>
+            </div>
         </div>`;
 
     renderFinishedActivity(formHTML);
@@ -118,6 +124,8 @@ function addActionOnFormSubmission(form) {
       formHTML: formHTML,
     });
 
+    addActionsOnWorkout();
+
     // local storage is updated after adding new workout
     setLocalStorage();
   });
@@ -131,13 +139,25 @@ function checkInputValidity(dur, dist, elev, cad) {
 
   if (selectedActivityType.value === "Cycling") {
     if (!isValidInput(dur, dist, elev) || !isPositive(dur, dist)) {
-      return alert("Enter valid data! The fields should be integers.");
+      swal({
+        title: "Invalid data",
+        text: "Only positive numbers can be used, unless you were cycling downhill of course :)",
+        icon: "error",
+        button: "Try again!",
+      });
+      return false;
     }
   }
 
   if (selectedActivityType.value === "Running") {
     if (!isValidInput(dur, dist, cad) || !isPositive(dur, dist, cad)) {
-      return alert("Enter valid data! The fields should be positive integers.");
+      swal({
+        title: "Invalid data",
+        text: "Only positive numbers can be used",
+        icon: "error",
+        button: "Try again!",
+      });
+      return false;
     }
   }
 
@@ -153,7 +173,7 @@ function computeHeaderOfWorkout() {
     selectedActivityType.value === "Running"
       ? "👟👟 Running on"
       : "🚴🏼🚴🏼 Cycling on"
-  } ${months.at(date.getMonth())}, ${date.getDate()}`;
+  } ${months.at(date.getMonth())}, ${" "} ${date.getDate()}`;
 }
 
 function renderFinishedActivity(formHTML) {
@@ -162,10 +182,66 @@ function renderFinishedActivity(formHTML) {
 }
 
 function renderMarker(headerMessage, mapEv) {
-  new L.Marker([mapEv.latlng.lat, mapEv.latlng.lng])
-    .addTo(map)
-    .bindPopup(headerMessage)
-    .openPopup();
+  const marker = new L.Marker([mapEv.latlng.lat, mapEv.latlng.lng]);
+  marker.addTo(map).bindPopup(headerMessage).openPopup();
+  markers.push(marker);
+}
+
+function addActionsOnWorkout() {
+  document
+    .querySelectorAll(".edit")
+    ?.forEach((editBtn) => editBtn.addEventListener("click", editWorkout));
+  document
+    .querySelectorAll(".delete")
+    ?.forEach((deleteBtn) =>
+      deleteBtn.addEventListener("click", deleteWorkout)
+    );
+  document
+    .querySelectorAll(".delete_all")
+    ?.forEach((deleteAllBtn) =>
+      deleteAllBtn.addEventListener("click", deleteAll)
+    );
+}
+
+function editWorkout(e) {
+  const workout = e.target.closest(".workout__registered");
+  console.log(workout);
+}
+
+function deleteWorkout(e) {
+  const workout = e.target.closest(".workout__registered");
+
+  const [workoutInArray, marker] = _findELements();
+  _removeElementsFromUI(workoutInArray, marker, workout);
+  setLocalStorage();
+}
+
+function _findELements() {
+  const workoutInArray = workouts.find((w) => w.id === workout.dataset.id);
+  const marker = markers.find(
+    (marker) =>
+      workoutInArray.lat === marker._latlng.lat &&
+      workoutInArray.lng === marker._latlng.lng
+  );
+
+  return [workoutInArray, marker];
+}
+
+function _removeElementsFromUI(workoutInArray, marker, workout) {
+  workouts.splice(workouts.indexOf(workoutInArray), 1);
+  markers.splice(markers.indexOf(marker), 1);
+  map.removeLayer(marker);
+  workout.remove();
+}
+
+function deleteAll() {
+  document.querySelectorAll(".workout__registered").forEach((w) => w.remove());
+  workouts.splice(0);
+  markers.forEach((marker) => {
+    map.removeLayer(marker);
+  });
+
+  setLocalStorage();
 }
 
 function toggleActivitiesTypeMenu(activitiesMenu) {
@@ -187,6 +263,8 @@ function moveToPopup() {
       const workoutToMoveTo = workouts.find(
         (workout) => workout.id === selectedWorkout.dataset.id
       );
+
+      if (!workoutToMoveTo) return;
       map.setView([workoutToMoveTo.lat, workoutToMoveTo.lng], 13);
     });
 }
@@ -214,6 +292,7 @@ function reset() {
 function main() {
   init();
   getLocalStorage();
+  addActionsOnWorkout();
   getUserPosition();
   toggleActivitiesTypeMenu(activitiesMenu);
   addActionOnFormSubmission(form);
