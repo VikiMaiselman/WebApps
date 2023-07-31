@@ -2,7 +2,8 @@
 
 // prettier-ignore
 let workoutsContainer, form, formRegistered, activitiesMenu, 
-    options, selectedActivityType, distance, duration, elevationGain, cadence;
+    options, selectedActivityType, distance, duration, elevationGain, cadence,
+    sortOptionToHigh, sortOptionToLow, sortingOptions;
 
 let map, mapEvent;
 
@@ -18,21 +19,34 @@ function init() {
   duration = document.querySelector("#duration");
   elevationGain = document.querySelectorAll(".elevation");
   cadence = document.querySelectorAll(".cadence");
+  sortOptionToHigh = document.querySelector(".to--high");
+  sortOptionToLow = document.querySelector(".to--low");
+  sortingOptions = document.querySelector("#sort_options");
 }
 
-function getUserPosition() {
+async function getUserPosition() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      function (position) {
-        loadMap(position);
-        addActionOnMapClick(map);
-      },
-      function () {
-        alert("Could not get your location!");
-      }
-    );
+    try {
+      const position = await getCurGeolocation();
+      loadMap(position);
+      addActionOnMapClick(map);
+    } catch (err) {
+      swal({
+        title: "Could not get your location",
+        text: "Check your internet connection and/or browser settings",
+        icon: "error",
+        button: "Ok",
+      });
+      return;
+    }
   }
 }
+
+const getCurGeolocation = function () {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
 
 function loadMap(position) {
   const { latitude, longitude } = position.coords;
@@ -47,12 +61,7 @@ function loadMap(position) {
 
   // because of localStorage API, markers are displayed only after map is loaded
   workouts.forEach((workout) => {
-    renderMarker(workout.headerMessage, {
-      latlng: {
-        lat: workout.lat,
-        lng: workout.lng,
-      },
-    });
+    renderMarker(workout.headerMessage, workout.lat, workout.lng);
   });
 }
 
@@ -68,6 +77,7 @@ function addActionOnMapClick() {
 
 function getCurrentSelectedOption() {
   selectedActivityType = document.querySelector(".selected");
+  console.log(selectedActivityType);
 }
 
 function renderForm() {
@@ -93,13 +103,16 @@ function addActionOnFormSubmission(form) {
       Math.trunc(Math.random() * 1000)
     ).join("");
 
+    console.log(checkInputValidity(dur, dist, elev, cad));
+
     if (!checkInputValidity(dur, dist, elev, cad)) return;
 
     const headerMessage = computeHeaderOfWorkout();
+    console.log(headerMessage);
     const formHTML = `
         <div class="workout workout__registered" data-id="${id}">
-            <div class="activity activity__description--header"><h2>${headerMessage}</h2></div>
-            <div class="activity activity__description--data">
+            <div class="activity activity__description--header" contenteditable="false"><h2>${headerMessage}</h2></div>
+            <div class="activity activity__description--data" contenteditable="false">
               <div class="activity__type">🏅🏅</div> 
               <div class="duration">${dur} min </div>
               <div class="distance">${dist} km </div>
@@ -108,12 +121,12 @@ function addActionOnFormSubmission(form) {
             <div class="activity actions--on__workout">
               <button class="on__workout edit">Edit</button>
               <button class="on__workout delete">Delete</button>
-              <button class="on__workout delete_all">Delete All</button>
+              <button id="edit_content" class="on__workout removed--from__flow">Save</button>
             </div>
         </div>`;
 
     renderFinishedActivity(formHTML);
-    renderMarker(headerMessage, mapEvent);
+    renderMarker(headerMessage, mapEvent.latlng.lat, mapEvent.latlng.lng);
 
     // adds new workout to the workouts-arr to be rendered on reload
     workouts.push({
@@ -122,12 +135,14 @@ function addActionOnFormSubmission(form) {
       lng: mapEvent.latlng.lng,
       headerMessage: headerMessage,
       formHTML: formHTML,
+      duration: dur,
+      distance: dist,
     });
 
     addActionsOnWorkout();
 
     // local storage is updated after adding new workout
-    setLocalStorage();
+    setLocalStorage("workouts", workouts);
   });
 }
 
@@ -181,8 +196,8 @@ function renderFinishedActivity(formHTML) {
   form.classList.add("hidden");
 }
 
-function renderMarker(headerMessage, mapEv) {
-  const marker = new L.Marker([mapEv.latlng.lat, mapEv.latlng.lng]);
+function renderMarker(headerMessage, lat, lng) {
+  const marker = new L.Marker([lat, lng]);
   marker.addTo(map).bindPopup(headerMessage).openPopup();
   markers.push(marker);
 }
@@ -196,27 +211,77 @@ function addActionsOnWorkout() {
     ?.forEach((deleteBtn) =>
       deleteBtn.addEventListener("click", deleteWorkout)
     );
+}
+
+function addActionsOnAllWorkouts() {
+  document.querySelector(".delete_all")?.addEventListener("click", deleteAll);
+
   document
-    .querySelectorAll(".delete_all")
-    ?.forEach((deleteAllBtn) =>
-      deleteAllBtn.addEventListener("click", deleteAll)
-    );
+    .querySelector(".sort__duration")
+    ?.addEventListener("click", sortByDuration);
+
+  document
+    .querySelector(".sort__distance")
+    ?.addEventListener("click", sortByDistance);
+
+  document
+    .querySelector(".position")
+    ?.addEventListener("click", positionToSeeAllMarkers);
 }
 
 function editWorkout(e) {
   const workout = e.target.closest(".workout__registered");
-  console.log(workout);
+  const saveBtn = workout.children[2].children[2];
+  saveBtn.classList.remove("removed--from__flow");
+
+  const [activityDescription, activityHeader] = makeContentEditable(workout);
+  const [workoutInArray, marker] = _findELements(workout);
+
+  saveBtn.addEventListener("click", () => {
+    activityDescription.setAttribute("contenteditable", "false");
+    activityHeader.setAttribute("contenteditable", "false");
+
+    saveBtn.classList.add("removed--from__flow");
+
+    workoutInArray.formHTML = `<div class="workout workout__registered" data-id=${workout.dataset.id}>
+     ${workout.innerHTML}
+    </div>`;
+    workoutInArray.headerMessage = workout.children[0].innerText;
+
+    _removeMarkerFromUI(marker);
+    renderMarker(
+      workoutInArray.headerMessage,
+      workoutInArray.lat,
+      workoutInArray.lng
+    );
+    setLocalStorage("workouts", workouts);
+  });
+}
+
+function makeContentEditable(workout) {
+  const activityDescription = workout.querySelectorAll(
+    ".activity__description--data"
+  )[0];
+  const activityHeader = workout.querySelectorAll(
+    ".activity__description--header"
+  )[0];
+
+  activityDescription.setAttribute("contenteditable", "true");
+  activityHeader.setAttribute("contenteditable", "true");
+
+  return [activityDescription, activityHeader];
 }
 
 function deleteWorkout(e) {
   const workout = e.target.closest(".workout__registered");
 
-  const [workoutInArray, marker] = _findELements();
-  _removeElementsFromUI(workoutInArray, marker, workout);
-  setLocalStorage();
+  const [workoutInArray, marker] = _findELements(workout);
+  _removeElementFromUI(workoutInArray, workout);
+  _removeMarkerFromUI(marker);
+  setLocalStorage("workouts", workouts);
 }
 
-function _findELements() {
+function _findELements(workout) {
   const workoutInArray = workouts.find((w) => w.id === workout.dataset.id);
   const marker = markers.find(
     (marker) =>
@@ -227,11 +292,14 @@ function _findELements() {
   return [workoutInArray, marker];
 }
 
-function _removeElementsFromUI(workoutInArray, marker, workout) {
+function _removeElementFromUI(workoutInArray, workout) {
   workouts.splice(workouts.indexOf(workoutInArray), 1);
+  workout.remove();
+}
+
+function _removeMarkerFromUI(marker) {
   markers.splice(markers.indexOf(marker), 1);
   map.removeLayer(marker);
-  workout.remove();
 }
 
 function deleteAll() {
@@ -241,14 +309,44 @@ function deleteAll() {
     map.removeLayer(marker);
   });
 
-  setLocalStorage();
+  setLocalStorage("workouts", workouts);
 }
 
-function toggleActivitiesTypeMenu(activitiesMenu) {
+function sortByDuration() {
+  sortWorkouts("duration");
+}
+
+function sortByDistance() {
+  sortWorkouts("distance");
+}
+
+function sortWorkouts(sortField) {
+  const sortedWorkouts = [...workouts];
+  sortOptionToLow.classList.contains("sort-selected")
+    ? sortedWorkouts.sort(
+        (workout1, workout2) => workout1[sortField] - workout2[sortField]
+      )
+    : sortedWorkouts.sort(
+        (workout1, workout2) => workout2[sortField] - workout1[sortField]
+      );
+
+  setLocalStorage("sortedWorkouts", sortedWorkouts);
+  document.querySelectorAll(".workout__registered").forEach((w) => w.remove());
+  getLocalStorage("sortedWorkouts");
+}
+
+function toggleMenusOptions(activitiesMenu, sortingOptions) {
+  // activity dropdown
   activitiesMenu.addEventListener("change", (e) => {
     cadence.forEach((c) => c.classList.toggle("hidden"));
     elevationGain.forEach((eG) => eG.classList.toggle("hidden"));
     options.forEach((opt) => opt.classList.toggle("selected"));
+  });
+
+  //   sorting drowdown
+  sortingOptions.addEventListener("change", (e) => {
+    sortOptionToLow.classList.toggle("sort-selected");
+    sortOptionToHigh.classList.toggle("sort-selected");
   });
 }
 
@@ -256,7 +354,7 @@ function moveToPopup() {
   document
     .querySelector(".workouts__displayed")
     .addEventListener("click", function (e) {
-      // clicking on any element inside the workout-div will resilt in the div clicking
+      // clicking on any element inside the workout-div will result in the div clicking
       const selectedWorkout = e.target.closest(".workout");
       if (!selectedWorkout) return;
 
@@ -269,14 +367,20 @@ function moveToPopup() {
     });
 }
 
-function setLocalStorage() {
-  localStorage.setItem("workouts", JSON.stringify(workouts));
+function positionToSeeAllMarkers() {
+  const allMarkers = new L.featureGroup([...markers]);
+  map.fitBounds(allMarkers.getBounds());
+}
+
+function setLocalStorage(itemToSetName, itemToSetData) {
+  localStorage.setItem(itemToSetName, JSON.stringify(itemToSetData));
   // converts objects to strings
   // this API is already provided for us by the browser
 }
 
-function getLocalStorage() {
-  const allData = JSON.parse(localStorage.getItem("workouts"));
+function getLocalStorage(itemToGetName) {
+  const allData = JSON.parse(localStorage.getItem(itemToGetName));
+  console.log(allData);
 
   if (!allData) return;
   workouts = allData;
@@ -291,10 +395,11 @@ function reset() {
 // ***************************************************************
 function main() {
   init();
-  getLocalStorage();
+  getLocalStorage("workouts");
   addActionsOnWorkout();
+  addActionsOnAllWorkouts();
   getUserPosition();
-  toggleActivitiesTypeMenu(activitiesMenu);
+  toggleMenusOptions(activitiesMenu, sortingOptions);
   addActionOnFormSubmission(form);
   moveToPopup();
 }

@@ -24,6 +24,13 @@
       src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
     ></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&family=Poppins:wght@100;400;600&display=swap"
+      rel="stylesheet"
+    />
+
     <script defer src="./index.js"></script>
     <link rel="stylesheet" href="./style.css" />
     <title>Workouts on Map</title>
@@ -37,6 +44,19 @@
         </div>
 
         <div class="workouts__container">
+          <div class="total__actions">
+            <button class="on__workout position">
+              Position Map For All Workouts
+            </button>
+            <button class="on__workout delete_all">Delete All</button>
+            <button class="on__workout sort__duration">Sort by Duration</button>
+            <button class="on__workout sort__distance">Sort by Distance</button>
+            <select id="sort_options" class="on__workout" name="sort_options">
+              <option class="to--low sort-selected">Highest to Lowest</option>
+              <option class="to--high">Lowest to Highest</option>
+            </select>
+          </div>
+
           <form action="" class="workout workout__form hidden">
             <label id="activity__type--label" for="activity__type">Type</label>
             <select
@@ -106,8 +126,10 @@
         </div>
 
         <footer>
-          © Copyright by Jonas Schmedtmann. With changes. Use for learning or
-          your portfolio.
+          <p>
+            © Copyright by Jonas Schmedtmann. With changes. Use for learning or
+            your portfolio.
+          </p>
         </footer>
       </div>
       <div class="side side--right" id="side--right"></div>
