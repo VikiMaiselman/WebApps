@@ -18,6 +18,14 @@ img {
   }
 }
 
+@media (min-width: 768px) {
+  /* property of bootstrap itself */
+  .col-md-8 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
 .container-fluid {
   flex-direction: row-reverse !important;
 }
