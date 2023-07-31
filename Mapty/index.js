@@ -10,7 +10,7 @@ let map, mapEvent;
 let workouts = [];
 const markers = [];
 
-function init() {
+function initFields() {
   workoutsContainer = document.querySelector(".workouts__displayed");
   form = document.querySelector(".workout__form");
   activitiesMenu = document.querySelector(".activity__type");
@@ -22,6 +22,15 @@ function init() {
   sortOptionToHigh = document.querySelector(".to--high");
   sortOptionToLow = document.querySelector(".to--low");
   sortingOptions = document.querySelector("#sort_options");
+}
+
+function clearUnrelatedData() {
+  window.addEventListener("load", (e) => {
+    document.querySelectorAll(".weather__field").forEach((field) => {
+      field.innerHTML = "";
+      field.classList.add("hidden");
+    });
+  });
 }
 
 async function getUserPosition() {
@@ -51,6 +60,7 @@ const getCurGeolocation = function () {
 function loadMap(position) {
   const { latitude, longitude } = position.coords;
   const coords = [latitude, longitude];
+
   map = L.map("side--right").setView(coords, 13);
   // 2nd arg is zooming: the bigger the # the closer the view
 
@@ -77,7 +87,6 @@ function addActionOnMapClick() {
 
 function getCurrentSelectedOption() {
   selectedActivityType = document.querySelector(".selected");
-  console.log(selectedActivityType);
 }
 
 function renderForm() {
@@ -99,16 +108,13 @@ function addActionOnFormSubmission(form) {
     const dist = +distance.value;
     const elev = +document.querySelector("#elevation").value;
     const cad = +document.querySelector("#cadence").value;
-    const id = Array.from({ length: 10 }, (_) =>
-      Math.trunc(Math.random() * 1000)
-    ).join("");
 
-    console.log(checkInputValidity(dur, dist, elev, cad));
+    // prettier-ignore
+    const id = Array.from({ length: 10 }, (_) => Math.trunc(Math.random() * 1000)).join("");
 
     if (!checkInputValidity(dur, dist, elev, cad)) return;
 
     const headerMessage = computeHeaderOfWorkout();
-    console.log(headerMessage);
     const formHTML = `
         <div class="workout workout__registered" data-id="${id}">
             <div class="activity activity__description--header" contenteditable="false"><h2>${headerMessage}</h2></div>
@@ -117,10 +123,12 @@ function addActionOnFormSubmission(form) {
               <div class="duration">${dur} min </div>
               <div class="distance">${dist} km </div>
               <div class="third">${elev ? elev + " m" : cad + " spm"}</div>
+              <div class="weather__field hidden"></div>
             </div> 
             <div class="activity actions--on__workout">
               <button class="on__workout edit">Edit</button>
               <button class="on__workout delete">Delete</button>
+              <button class="on__workout weather">Display Weather</button>
               <button id="edit_content" class="on__workout removed--from__flow">Save</button>
             </div>
         </div>`;
@@ -206,11 +214,24 @@ function addActionsOnWorkout() {
   document
     .querySelectorAll(".edit")
     ?.forEach((editBtn) => editBtn.addEventListener("click", editWorkout));
+
   document
     .querySelectorAll(".delete")
     ?.forEach((deleteBtn) =>
       deleteBtn.addEventListener("click", deleteWorkout)
     );
+
+  document.querySelectorAll(".weather")?.forEach((weatherBtn) => {
+    const idWorkoutGUI = weatherBtn.closest(".workout__registered").dataset.id;
+    const workoutInArray = workouts.find((w) => w.id === idWorkoutGUI);
+    weatherBtn.addEventListener(
+      "click",
+      getWeatherForWorkout.bind([
+        workoutInArray,
+        weatherBtn.closest(".workout__registered"),
+      ])
+    );
+  });
 }
 
 function addActionsOnAllWorkouts() {
@@ -231,7 +252,7 @@ function addActionsOnAllWorkouts() {
 
 function editWorkout(e) {
   const workout = e.target.closest(".workout__registered");
-  const saveBtn = workout.children[2].children[2];
+  const saveBtn = workout.children[2].children[3];
   saveBtn.classList.remove("removed--from__flow");
 
   const [activityDescription, activityHeader] = makeContentEditable(workout);
@@ -333,6 +354,8 @@ function sortWorkouts(sortField) {
   setLocalStorage("sortedWorkouts", sortedWorkouts);
   document.querySelectorAll(".workout__registered").forEach((w) => w.remove());
   getLocalStorage("sortedWorkouts");
+
+  addActionsOnWorkout();
 }
 
 function toggleMenusOptions(activitiesMenu, sortingOptions) {
@@ -343,7 +366,7 @@ function toggleMenusOptions(activitiesMenu, sortingOptions) {
     options.forEach((opt) => opt.classList.toggle("selected"));
   });
 
-  //   sorting drowdown
+  // sorting drowdown
   sortingOptions.addEventListener("change", (e) => {
     sortOptionToLow.classList.toggle("sort-selected");
     sortOptionToHigh.classList.toggle("sort-selected");
@@ -372,6 +395,33 @@ function positionToSeeAllMarkers() {
   map.fitBounds(allMarkers.getBounds());
 }
 
+const getWeatherForWorkout = async function () {
+  // SHOULD NOT be hardcoded!
+  try {
+    const APIkey = "0f627327d6667cb5f27a7ff7043bc433";
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${this[0].lat}&lon=${this[0].lng}&units=metric&appid=${APIkey}`
+    );
+
+    if (!response.ok)
+      throw new Error(`Something went wrong, ${response.status}`);
+
+    const data = await response.json();
+
+    const iconURL =
+      "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+
+    const displayWeatherField = this[1]
+      .querySelector(".activity__description--data")
+      .querySelector(".weather__field");
+
+    displayWeatherField.innerHTML = `${data.main.temp}°C  <img src="${iconURL}" alt="Weather icon"></img>`;
+    displayWeatherField.classList.remove("hidden");
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
 function setLocalStorage(itemToSetName, itemToSetData) {
   localStorage.setItem(itemToSetName, JSON.stringify(itemToSetData));
   // converts objects to strings
@@ -380,7 +430,7 @@ function setLocalStorage(itemToSetName, itemToSetData) {
 
 function getLocalStorage(itemToGetName) {
   const allData = JSON.parse(localStorage.getItem(itemToGetName));
-  console.log(allData);
+  //   console.log(allData);
 
   if (!allData) return;
   workouts = allData;
@@ -394,7 +444,8 @@ function reset() {
 
 // ***************************************************************
 function main() {
-  init();
+  initFields();
+  clearUnrelatedData();
   getLocalStorage("workouts");
   addActionsOnWorkout();
   addActionsOnAllWorkouts();

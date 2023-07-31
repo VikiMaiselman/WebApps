@@ -172,6 +172,12 @@ select {
   opacity: 0;
 }
 
+.weather__field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 footer {
   text-align: center;
   font-size: 0.8rem;
