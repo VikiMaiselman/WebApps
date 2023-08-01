@@ -402,7 +402,7 @@ function startApp() {
   const getWeatherForWorkout = async function () {
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${this[0].lat}&lon=${this[0].lng}&units=metric&appid=${secret.APIKEY}`
+        `https://api.open-meteo.com/v1/forecast?latitude=${this[0].lat}&longitude=${this[0].lng}&current_weather=true`
       );
 
       if (!response.ok)
@@ -410,14 +410,18 @@ function startApp() {
 
       const data = await response.json();
 
-      const iconURL =
-        "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+      let weatherCode = data.current_weather.weathercode;
+      if (weatherCode === 0) weatherCode = 1;
+
+      const iconURL = `http://openweathermap.org/img/w/${weatherCode
+        .toString()
+        .padStart(2, 0)}d.png`;
 
       const displayWeatherField = this[1]
         .querySelector(".activity__description--data")
         .querySelector(".weather__field");
 
-      displayWeatherField.innerHTML = `${data.main.temp}°C  <img src="${iconURL}" alt="Weather icon"></img>`;
+      displayWeatherField.innerHTML = `${data.current_weather.temperature}°C <img src="${iconURL}" alt="Weather icon"></img>`;
       displayWeatherField.classList.remove("hidden");
     } catch (err) {
       swal({
