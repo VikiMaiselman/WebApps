@@ -1,2 +1,0 @@
-api.key filter=git-crypt diff=git-crypt
-secrets.js ilter=git-crypt diff=git-crypt
