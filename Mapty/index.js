@@ -401,7 +401,7 @@ function startApp() {
   const getWeatherForWorkout = async function () {
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${this[0].lat}&lon=${this[0].lng}&units=metric&appid=${APIKey}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${this[0].lat}&lon=${this[0].lng}&units=metric&appid=${APIKEY}`
       );
 
       if (!response.ok)
