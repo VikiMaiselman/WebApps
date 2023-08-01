@@ -399,9 +399,7 @@ function startApp() {
   }
 
   const getWeatherForWorkout = async function () {
-    // SHOULD NOT be hardcoded!
     try {
-      //   const APIkey = "0f627327d6667cb5f27a7ff7043bc433";
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${this[0].lat}&lon=${this[0].lng}&units=metric&appid=${APIKey}`
       );
@@ -425,7 +423,7 @@ function startApp() {
         title: "Something went wrong",
         text: `${err.message}`,
         icon: "error",
-        button: "Reload and try again",
+        button: "Try again",
       });
       throw new Error(err.message);
     }
