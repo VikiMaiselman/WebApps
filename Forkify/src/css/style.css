@@ -745,7 +745,7 @@ footer {
 
   .recipe__in-list {
     font-size: 0.3rem;
-    line-height: 0.75;
+    line-height: 1;
   }
 
   .recipe-icon img {
