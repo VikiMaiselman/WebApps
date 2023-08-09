@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,200;6..12,300;6..12,400;6..12,500;6..12,600;6..12,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <script defer src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <script type="module" src="./src/js/controller.js"></script>
+
+    <title>Forkify</title>
+  </head>
+  <body>
+    <main>
+      <nav class="nav-bar">
+        <div class="nav-bar--logo">
+          <img class="logo--img" src="./src/img/logo.png" alt="" />
+        </div>
+        <div class="nav-bar--search">
+          <input
+            class="search__elem"
+            type="text"
+            id="search__input"
+            placeholder="Search ..."
+          />
+          <!-- placeholder="Search over 1,000,000 recipes..." -->
+          <button class="btn search__elem" type="submit" id="query-search__btn">Search</button>
+        </div>
+        <ul class="nav-bar--links">
+          <li class="nav-bar--link">
+            <button class="nav-bar--link nav-bar--btn add-recipe">
+              Add recipe
+            </button>
+          </li>
+          <li class="nav-bar--link">
+            <button class="nav-bar--link nav-bar--btn bookmarks">
+              Bookmarks
+            </button>
+            <!-- <div class="bookmarks__saved"> -->
+          </li>
+          <a
+            href="javascript:void(0);"
+            class="icon sandwich__icon hidden"
+            onclick="myFunction()"
+          >
+            <i class="fa fa-bars"></i>
+          </a>
+        </ul>
+      </nav>
+
+      <div class="container">
+        <div class="container__side recipe--list">
+          <div class="recipes__in-list">
+            <!-- <div class="recipe__in-list">
+              <img class="recipe-icon" src="" alt="Recipe icon" />
+              <h3 class="recipe--name__small">Salad Booster</h3>
+              <p class="recipe--website-name">101 Cookboks</p>
+            </div> -->
+            <!-- <div class="recipe__in-list active--recipe">
+              <div class="recipe-icon">
+                <img src="" alt="Recipe icon" />
+              </div>
+              <h3 class="recipe--name__small">Salad Booster</h3>
+              <p class="recipe--website-name">101 Cookboks</p>
+            </div> -->
+          </div>
+          <div class="pagination">
+            <!-- <button class="update__page">
+              <svg class="pagination-svg">
+                <use href="src/img/icons.svg#icon-arrow-left"></use>
+              </svg>
+              <p>Page <span>2</span></p>
+            </button>
+            <button class="update__page">
+              <p>Page <span>2</span></p>
+              <svg class="pagination-svg">
+                <use href="src/img/icons.svg#icon-arrow-right"></use>
+              </svg>
+            </button> -->
+          </div>
+          <footer>© Copyright by Jonas Schmedtmann. With changes.</footer>
+        </div>
+
+        <div class="container__side recipe--single">
+          <div class="recipe__start-msg">
+            Start by searching for a recipe or an ingredient. </br>
+            Have fun! </br>
+            🥗🫕🥨🥘🧁🌮🍝🍕
+          </div>
+
+          <div class="recipe__body hidden">
+            <div class="recipe-image">
+              <img id="recipe--img" src="" alt="Cooked recipe" />
+              <h1 id="recipe--name"></h1>
+            </div>
+
+            <div class="recipe-servings">
+              <div class="recipe-servings--left">
+                <div class="cooking-duration">
+                  <p><span id="duration">60</span> minutes</p>
+                </div>
+                <div class="cooking-servings">
+                  <p><span id="num-people">4</span> servings</p>
+                  <div class="recipe__info-buttons">
+                    <button
+                      class="btn--tiny btn--update-servings minus"
+                    >
+                      <svg>
+                        <use href="src/img/icons.svg#icon-minus-circle"></use>
+                      </svg>
+                    </button>
+                    <button
+                      class="btn--tiny btn--update-servings plus"
+                    >
+                      <svg>
+                        <use href="src/img/icons.svg#icon-plus-circle"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="recipe-servings--right">
+                <button class="btn--tiny btn--bookmark" type="submit">
+                  <svg>
+                    <use id="svg-bookmark" href="src/img/icons.svg#icon-bookmark"></use>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="recipe__main-info recipe-ingredients">
+              <h3>Recipe ingredients</h3>
+              <ul class="ingredients-list"></ul>
+            </div>
+            <div class="recipe__main-info recipe-instructions">
+              <h3>HOW TO COOK IT</h3>
+              <p>
+                This recipe was carefully designed and tested by
+                <span class="website-name"></span>. Please check
+                out directions at their website.
+              </p>
+              <a class="btn search__elem" id="search__instructions" href="">Directions -></a>
+              <!-- <button class="btn search__elem" id="search__instructions--btn" type="submit"> -->
+              <!-- </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal__window hidden"></div>
+      <div class="upload__msg upload__msg--hidden">
+        <p>Uploads disabled. You can do it with your API key.</p>
+        <button class="btn--close__modal">X</button>
+      </div>
+     
+
+      </div>
+
+
+      <!-- <div class="spinner">
+          <svg>
+            <use href="src/img/icons.svg#icon-loader"></use>
+          </svg>
+        </div> -->
+    </main>
+  </body>
+</html>
