@@ -1,5 +1,6 @@
 # WebApps
 ## 4 Projects that are Static Web Pages (no running server)
+
 ### About Me
 * A simple basic website about my achievements and experience
 * Implemented with HTML, CSS and Bootstrap Library
@@ -17,6 +18,7 @@
 ### Forkify
 * A website that allows searching for recipes by categories, saving them as bookmarks and using them later.
 * Implemented as a static website with HTML, CSS and asynchronous JS using the MVC architecture.
+
 
 
 ## 1 Project that is a full-blown dynamic Web App 
