@@ -1,0 +1,157 @@
+* {
+  /* padding: 0;
+  margin: 0; */
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+.navbar-brand {
+  background-color: inherit;
+  border: none;
+}
+
+/* [data-bs-theme="dark"] body {
+  color: var(--bs-primary-text-emphasis);
+  background-color: var(--bs-primary-bg-subtle);
+} */
+
+.main-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2.5%;
+}
+
+.part {
+  /* border: 1px white solid; */
+  height: 80vh;
+  overflow: scroll;
+}
+
+.right-part {
+  flex: 0.3;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hidden-part {
+  display: none;
+}
+
+.central-part {
+  flex: 0.7;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.left-part {
+  flex: 0.25;
+}
+
+/* for left part */
+.list-group-item--left {
+  border: none !important;
+}
+
+/* for central part */
+.list-group-flush li.checked::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  transform: rotate(45deg);
+  height: 15px;
+  width: 10px;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  border-color: white;
+}
+
+.list-group-flush li.checked {
+  text-decoration: line-through;
+  background-color: var(--bs-list-group-border-color);
+}
+
+.task {
+  position: relative;
+}
+
+.close, .closeList {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px 15px;
+  font-size: large;
+}
+
+.weather {
+  max-height: 40px;
+  vertical-align: middle;
+  font-size: small;
+}
+
+@media (max-width: 768px) {
+  .container-fluid {
+    font-size: small !important;
+  }
+
+  .navbar-brand {
+    font-size: large !important;
+    margin-right: 0 !important;
+  }
+
+  .list-group-item {
+    font-size: xx-small;
+    line-height: 1;
+    padding: 0.3rem !important;
+  }
+
+  h2 {
+    font-size: medium !important;
+  }
+
+  .left-part {
+    display: none !important;
+  }
+
+  .vr-final {
+    display: none !important;
+  }
+
+  .form-control {
+    font-size: small !important;
+    min-width: 50%;
+    overflow-x: hidden;
+  }
+
+  .list-group-flush li.checked::before {
+    top: 5px;
+    margin-right: 10px;
+    height: 5px;
+    width: 5px;
+    border-width: 0 0.5px 0.5px 0;
+  }
+
+  .close, .closeList {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 5px;
+    font-size: xx-small;
+  }
+
+}
+
+
+/* xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px */

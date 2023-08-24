@@ -1,0 +1,137 @@
+<%- include('partials/header.ejs') %>
+
+    
+    <main class="main-container container-fluid mx-2 my-5">
+        
+      <div class="part right-part">
+        <div>
+            <h2>My Lists</h2>
+            <div class="list-group lists">
+              <!-- <a href="/today" class="list-group-item list-group-item--left list-group-item-action my-list list-group-item-light" aria-current="true" data-name="today" id="today">
+                  Today
+              </a> -->
+      
+              <% if (locals.userListsData) {%>
+                <% userListsData.forEach((data, idx) => {%>
+                  <%- data.html %>
+                  <% if (idx === 5) { %>
+                    <!-- a bootstrap horizontal divider -->
+                    <%-  '<hr class="hr hr-blurry">' %> 
+                  <% }%>
+                <% }) %>
+              <% } %>
+            </div>
+        </div>
+
+        <form class="d-flex mt-3" role="search" action="/addList" method="POST">
+            <input               class="form-control me-2"
+              type="text"
+              name="listName"
+              placeholder="Add New List"
+              aria-label="Search"
+            >
+            <button class="btn btn-outline-success" type="submit">
+              +
+            </button>
+        </form>
+      </div>
+
+      <div class="vr"></div>
+
+      
+      <div class="part central-part">
+        <div>
+            <h2>
+              <% if (locals.list) { %>
+                <% if (list !== 'Completed') { %>
+                  <%=list.listName %>
+                <% } %>  
+              <% } else { %> 
+                My Tasks 
+               <% } %> 
+             </h2>
+
+            <ul class="list-group list-group-flush tasks">
+
+            <% if (locals.list) {%>
+              <% list.tasks.forEach(task => {%>
+                <% console.log(task)%>
+                <%- task.taskHTML %>
+              <% }) %>
+            <% } %>
+
+            </ul>
+        </div>
+
+        <% if (locals.list && list.path !== 'completed') { %>
+          <form class="d-flex mt-3" role="search" action="<%if (locals.list) { %> <%= list.path %> <% } %>" method="post">
+            <input               class="form-control me-2"
+              type="search"
+              name="taskName"
+              placeholder="Add New Task"
+              aria-label="Search"
+            >
+            <button class="btn btn-outline-success" type="submit">
+              +
+            </button>
+        </form>
+        <% } else { %>
+          <form class="d-flex mt-3" role="search" action="/clearCompletedTasks" method="POST">
+            <div class="form-control me-2">Clear All Completed Tasks</div>
+            <button class="btn btn-outline-success" type="submit">
+              X
+            </button>
+        </form>
+        <% } %>
+        
+    </div>
+
+      <div class="vr vr-final"></div>
+
+      
+      <div class="part left-part">
+        <h2>My Task</h2>
+        <div class="list-group list-group-flush me-5">
+          <button             type="button"
+            class="list-group-item list-group-item-action"
+            aria-current="true"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+              <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+            </svg>
+            Mark as Important
+          </button>
+          <button type="button" class="list-group-item list-group-item-action disabled">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+            </svg>
+            Remind Me
+          </button>
+          <button type="button" class="list-group-item list-group-item-action disabled">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-repeat" viewBox="0 0 16 16">
+              <path d="M11 5.466V4H5a4 4 0 0 0-3.584 5.777.5.5 0 1 1-.896.446A5 5 0 0 1 5 3h6V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192Zm3.81.086a.5.5 0 0 1 .67.225A5 5 0 0 1 11 13H5v1.466a.25.25 0 0 1-.41.192l-2.36-1.966a.25.25 0 0 1 0-.384l2.36-1.966a.25.25 0 0 1 .41.192V12h6a4 4 0 0 0 3.585-5.777.5.5 0 0 1 .225-.67Z"/>
+            </svg>
+            Repeat
+          </button>
+          <button type="button" class="list-group-item list-group-item-action disabled">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-plus" viewBox="0 0 16 16">
+              <path d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z"/>
+              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+            </svg>
+            Add File
+          </button>
+          <input class="list-group-item list-group-item-action"
+            contenteditable="true"
+            placeholder="Add your notes"
+          > 
+        </div>
+      </div>
+    </main>
+
+    <script type="text/javascript" src="js/client.js"></script>
+  
+  
+ 
+
+
+
