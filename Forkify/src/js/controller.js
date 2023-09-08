@@ -12,6 +12,7 @@ import { searchView } from "./views/searchView.js";
 import { resultsView } from "./views/resultsView.js";
 import { paginationView } from "./views/paginationView.js";
 import { bookmarksView } from "./views/bookmarksView.js";
+import PreviewView from "./views/previewView.js";
 
 // F U N C T I O N S
 async function controlRecipe() {
@@ -65,13 +66,12 @@ function controlBookmark() {
   recipeView.updateBookmarking(data.recipe);
 }
 
-function controlDisplayBookmark(toDisplay) {
-  if (toDisplay) bookmarksView.render(getSearchesPerPage(1, true));
+function controlDisplayBookmark(isDisplayBookmarks) {
+  if (isDisplayBookmarks) bookmarksView.render(getSearchesPerPage(1, true));
   else {
-    console.log(getSearchesPerPage(1, false).length === 0);
     if (getSearchesPerPage(1, false).length !== 0) {
       resultsView.render(getSearchesPerPage(1, false));
-    }
+    } else bookmarksView.renderEmptyList();
   }
 }
 

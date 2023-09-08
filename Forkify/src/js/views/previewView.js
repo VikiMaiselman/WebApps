@@ -39,16 +39,7 @@ export default class PreviewView extends View {
     });
   }
 
-  addHandlerDisplayBookmarks(handler) {
-    let toDisplay;
-    selector.bookmarksBtn.addEventListener("mouseover", (e) => {
-      toDisplay = true;
-      handler(toDisplay);
-    });
-
-    selector.bookmarksBtn.addEventListener("mouseout", (e) => {
-      toDisplay = false;
-      handler(toDisplay);
-    });
+  renderEmptyList() {
+    this._parentElement.innerHTML = "";
   }
 }

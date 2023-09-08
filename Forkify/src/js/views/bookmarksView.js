@@ -7,6 +7,24 @@ class BookmarksView extends PreviewView {
     title: "No bookmarks yet",
     text: "Find a nice recipe and save it ;)",
   };
+
+  addHandlerDisplayBookmarks(handler) {
+    let toDisplay;
+    selector.bookmarksBtn.addEventListener("mouseover", (e) => {
+      toDisplay = true;
+      handler(toDisplay);
+    });
+
+    // selector.bookmarksBtn.addEventListener("dblclick", (e) => {
+    //   toDisplay = true;
+    //   handler(toDisplay);
+    // });
+
+    selector.bookmarksBtn.addEventListener("mouseout", (e) => {
+      toDisplay = false;
+      handler(toDisplay);
+    });
+  }
 }
 
 export const bookmarksView = new BookmarksView();
