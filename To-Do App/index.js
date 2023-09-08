@@ -17,63 +17,59 @@ app.get("/", (req, res) => {
 });
 
 
-// initailizes local storage with pre-defined lists on program start
+// initailizes local storage with pre-defined task Lists on program start
+// and dynamically adds get and post endpoints for each of them
 function init() {
   console.log('init working');
   // helper.clearStorage();
   
   let userLists = helper.getDataFromLocalStorage();
   if (!userLists) {
-    helper.updateLocalStorage(helper.userListsData);
+    // populate the storage with 7 predefined task Lists (Today, Important, Planned ...)
+    helper.updateLocalStorage(helper.userListsData); 
     userLists = helper.getDataFromLocalStorage();
   }
 
   userLists.forEach(list => {
-    app.get(`/${list.path}`, async (req,res) => {
-      await helper.getTasks(list.listName, res)
-    });
-  
-    app.post(`/${list.path}`, (req,res) => {
-      helper.addTask(req.body.taskName, list.listName, res);
-    });
+    addGetAndSetForNewList(list, list.path);
   })
 }
 init();
 
 
 app.post('/addList', (req, res) => {
-  const [userLists, nameForId] = helper.createNewList(req);
+  const [newCustomTasksList, nameForId] = helper.createNewList(req);
   // dynamically adds app.get & app.post to any newly created list
-  addGetAndSetForNewCustomList(req.body.listName, nameForId); 
-  res.redirect(`/${nameForId}`)
+  addGetAndSetForNewList(newCustomTasksList, nameForId); 
+  return res.redirect(`/${nameForId}`);
 })
 
-function addGetAndSetForNewCustomList(listName, path) {
-  app.get(`/${path}`, async (req, res) => {
-    await helper.getTasks(listName, res);
+function addGetAndSetForNewList(list, path) {
+  app.get(`/${path}`, (req, res) => {
+    const [userLists, listToShow] = helper.getTasks(list);
+    res.render('index.ejs', {userListsData: userLists, list: listToShow})
   });
 
   app.post(`/${path}`, (req,res) => {
-    helper.addTask(req.body.taskName, listName, res);
+    const [userLists, listTaskWasAddedTo] = helper.addTask(req.body.taskName, list);
+    res.render('index.ejs', {userListsData: userLists, list: listTaskWasAddedTo}); // return only data and render in index.js
   });
 }
-
-
-// delete custom list 
-app.post('/deleteList', (req, res) => {
-  const dataFromStorage = helper.getDataFromLocalStorage();
-
-  const listIndex = dataFromStorage.findIndex(list => list.path === req.body.listId);
-  dataFromStorage.splice(listIndex, 1);
-
-  helper.updateLocalStorage(dataFromStorage);
-  res.redirect('/');
-});
 
 
 // to make possible data transfer from client side to server side (allows parsing & CORS)
 app.use(bodyParser.json());
 app.use(helper.allowAccessControl);
+
+// delete custom list 
+app.post('/deleteList', (req, res) => {
+  const dataFromStorage = helper.getDataFromLocalStorage();
+  const listIndex = dataFromStorage.findIndex(list => list.path === req.body.listId);
+  dataFromStorage.splice(listIndex, 1);
+
+  helper.updateLocalStorage(dataFromStorage);
+  return res.redirect('/');
+});
 
 
 // clicking on tasks from browser results in striking through
@@ -82,7 +78,7 @@ app.post('/finished', (req, res) => {
   const dataFromStorage = helper.getDataFromLocalStorage();
 
   // render task appropriately (stroken through)
-  helper.updateTaskStatus(dataFromStorage, req.body);
+  helper.updateTask(dataFromStorage, req.body);
 
   // save changes
   helper.updateLocalStorage(dataFromStorage);
@@ -96,7 +92,7 @@ app.post('/toCompleted', (req, resp) => {
   const dataFromStorage = helper.getDataFromLocalStorage();
   helper.move(dataFromStorage, req.body, 'completed')
   helper.updateLocalStorage(dataFromStorage);
-  resp.redirect('back');
+  return resp.redirect('back');
 });
 
 
@@ -110,7 +106,7 @@ app.post("/clearCompletedTasks", (req, res) => {
 
 
 // forward task from 'today' / 'this week' to 'planned' if date expired
-const scheduledAction = cron.schedule('0 25 13 * * *' , async (req) => {
+const scheduledAction = cron.schedule('0 0 0 * * *' , async (req) => {
   const dataFromStorage = helper.getDataFromLocalStorage();
   dataFromStorage.forEach(list => {
     if (list.path === 'today' || list.path === 'thisWeek') {
@@ -128,8 +124,17 @@ app.post('/start-scheduler', async (req, res) => {
 });
 
 
+// update task content
+app.patch('/updateTask', (req, res) => {
+  const dataFromStorage = helper.getDataFromLocalStorage();
+
+  helper.updateTask(dataFromStorage, req.body);
+
+  helper.updateLocalStorage(dataFromStorage);
+})
+
 // starting point, server is ready and up
-app.listen(port, (req, res) =>
+app.listen(port, () =>
   console.log(`The server is ready on port ${port}`)
 );
 

@@ -1,22 +1,58 @@
 // clicking on task makes it become storken through
 const tasks = document.querySelector('.tasks');
-tasks.addEventListener('click', async (e) => {
-    if (!e.target.classList.contains('task')) return;
-    e.target.classList.toggle('checked');
+tasks.addEventListener('dblclick', async (e) => {
+    if (e.target.classList.contains('task') || e.target.classList.contains('content')) {
+        e.target.closest('.task').classList.toggle('checked');
 
-    const data = {
-        id: e.target.id,
-        isChecked: e.target.classList.contains('checked')
-    };
+        const data = {
+            taskId: e.target.id,
+            isTaskCompleted: e.target.classList.contains('checked')
+        };
 
-    await fetch('/finished', {
-        method: 'POST', 
-        headers: {
-            "Content-Type": "application/json",
-          },
-        body: JSON.stringify(data),
-    });
+        await fetch('/finished', {
+            method: 'POST', 
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+    }
 });
+
+
+// on click on the text - task content is changed
+tasks.addEventListener('click', (e) => {
+    if (!e.target.closest('.update')) return;
+
+    const task = e.target.closest('.task');
+    const content = task.querySelector('.content');
+
+    content.setAttribute("contenteditable", true);
+
+    document.addEventListener('keydown', async (e) => {
+        if (e.code === "Enter") {
+            content.setAttribute("contenteditable", false);
+            const newValue = content.innerHTML;
+            console.log(task);
+
+            const body = {
+                taskId: task.id,
+                taskName: newValue,
+                isTaskCompleted: task.classList.contains('checked'),
+            }
+
+            await fetch('/updateTask', {
+                method: 'PATCH',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+            }).then(response => response.json())
+              .catch(err => console.error(err));
+        }
+    })
+});
+
 
 // clicking on list makes it become lighter
 const lists = document.querySelector('.lists');
@@ -54,38 +90,44 @@ tasks.addEventListener('click', async (e) => {
     });
 });
 
-tasks.addEventListener('mouseover', async (e) => {
-    if (!e.target.closest('.close')) return;
-    e.target.style.backgroundColor = '#CED1D6';
-});
+function addEffectsOnHover(object) {
+    object.addEventListener('mouseover', async (e) => {
+        if (e.target.closest('.close') || e.target.closest('.closeList') || e.target.closest('.update')) {
+            e.target.style.backgroundColor = '#495157';
+        }
+    });
+    
+    object.addEventListener('mouseout', async (e) => {
+        if (e.target.closest('.close') || e.target.closest('.closeList') || e.target.closest('.update')) {
+            e.target.style.backgroundColor = 'inherit';
+        }
+    });
+}
+addEffectsOnHover(tasks);
+addEffectsOnHover(lists);
 
-tasks.addEventListener('mouseout', async (e) => {
-    if (!e.target.closest('.close')) return;
-    e.target.style.backgroundColor = 'inherit';
-});
-
-//clicking on list close(X)-button deletes the list and all tasks
+//clicking on list close(X)-button deletes the list and all its tasks
 lists.addEventListener('click', async (e) => {
     if (!e.target.closest('.closeList')) return;
-    
-    const body = {
-        listId: e.target.closest('.my-list').path,
-    }
 
-    fetch('/deleteList', {
+    const data = {
+        listId: e.target.closest('.my-list').id,
+    };
+
+    await fetch('/deleteList', {
         method: 'POST',  
         headers: {
         "Content-Type": "application/json",
         }, 
+        body: JSON.stringify(data),
         redirect: "follow",
-        body: JSON.stringify(body)
     }).then(response => {
         // HTTP 301 response
         // how to follow the redirection 
         if (response.redirected) {
             window.location.href = response.url;
         }
-    })
+    }).then(data => console.log(data))
     .catch(function(err) {
         console.info(err + " url: " + url);
     });
