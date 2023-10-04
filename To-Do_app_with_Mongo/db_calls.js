@@ -6,8 +6,7 @@ let TaskInfo;
 
 export async function connectDatabase() {
     try {
-        // await mongoose.connect("mongodb://localhost:27017/toDo");
-        await mongoose.connect('mongodb+srv://maiselmanwikki:Kaqbiw-decrug-nobwe0@to-do-cluster.sq0hqju.mongodb.net/toDo')
+        await mongoose.connect("mongodb://localhost:27017/toDo");
 
         const taskInfoSchema = new mongoose.Schema({
             isImportant: Boolean,
@@ -79,8 +78,7 @@ export async function connectDatabase() {
 
 export async function getTaskLists() {
     try {
-        // await mongoose.connect("mongodb://localhost:27017/toDo");
-        await mongoose.connect('mongodb+srv://maiselmanwikki:Kaqbiw-decrug-nobwe0@to-do-cluster.sq0hqju.mongodb.net/toDo')
+        await mongoose.connect("mongodb://localhost:27017/toDo");
         const allLists = await TaskList.find({});
         return allLists;
     } finally {
@@ -91,8 +89,8 @@ export async function getTaskLists() {
 
 export async function getTasksOfTaskList(taskListName) {
     try {
-        // await mongoose.connect("mongodb://localhost:27017/toDo");
-        await mongoose.connect('mongodb+srv://maiselmanwikki:Kaqbiw-decrug-nobwe0@to-do-cluster.sq0hqju.mongodb.net/toDo')
+        await mongoose.connect("mongodb://localhost:27017/toDo");
+
         const taskList = await TaskList.find({name: taskListName});
         if (! taskList) return;
 
@@ -105,8 +103,8 @@ export async function getTasksOfTaskList(taskListName) {
 
 export async function createTaskList(tasklistName) {
     try {
-        // await mongoose.connect("mongodb://localhost:27017/toDo");
-        await mongoose.connect('mongodb+srv://maiselmanwikki:Kaqbiw-decrug-nobwe0@to-do-cluster.sq0hqju.mongodb.net/toDo')
+        await mongoose.connect("mongodb://localhost:27017/toDo");
+        
         const newTasklist = new TaskList({
             name: `${tasklistName}`,
             tasks: []
@@ -121,8 +119,8 @@ export async function createTaskList(tasklistName) {
 
 export async function deleteTaskList(tasklistName) {
     try {
-        // await mongoose.connect("mongodb://localhost:27017/toDo");
-        await mongoose.connect('mongodb+srv://maiselmanwikki:Kaqbiw-decrug-nobwe0@to-do-cluster.sq0hqju.mongodb.net/toDo')
+        await mongoose.connect("mongodb://localhost:27017/toDo");
+
         await TaskList.deleteOne({name: tasklistName});
     } catch (error) {
         console.error(error);
@@ -135,8 +133,8 @@ export async function deleteTaskList(tasklistName) {
 // Tasks 
 export async function createTask(tasklistName, taskName) {
     try {
-        // await mongoose.connect("mongodb://localhost:27017/toDo");
-        await mongoose.connect('mongodb+srv://maiselmanwikki:Kaqbiw-decrug-nobwe0@to-do-cluster.sq0hqju.mongodb.net/toDo')
+        await mongoose.connect("mongodb://localhost:27017/toDo");
+       
         // const tasklist = await TaskList.find({name: tasklistName});
         // if (!tasklist) return;
 
@@ -161,8 +159,7 @@ export async function createTask(tasklistName, taskName) {
 
 export async function updateTask(tasklistName, id, newTaskName) {
     try {
-        // await mongoose.connect("mongodb://localhost:27017/toDo");
-        await mongoose.connect('mongodb+srv://maiselmanwikki:Kaqbiw-decrug-nobwe0@to-do-cluster.sq0hqju.mongodb.net/toDo')
+        await mongoose.connect("mongodb://localhost:27017/toDo");
 
         await TaskList.findOneAndUpdate(
             {
@@ -180,8 +177,8 @@ export async function updateTask(tasklistName, id, newTaskName) {
 
 export async function deleteTask(tasklistName, id) {
     try {
-        // await mongoose.connect("mongodb://localhost:27017/toDo");
-        await mongoose.connect('mongodb+srv://maiselmanwikki:Kaqbiw-decrug-nobwe0@to-do-cluster.sq0hqju.mongodb.net/toDo')
+        await mongoose.connect("mongodb://localhost:27017/toDo");
+        
         await TaskList.findOneAndUpdate(
             {name: tasklistName, 'tasks._id': id}, 
             {$pull: {tasks : {
@@ -199,8 +196,7 @@ export async function deleteTask(tasklistName, id) {
 // Notes
 export async function getDataAboutTask(tasklistName, id) {
     try {
-        // await mongoose.connect("mongodb://localhost:27017/toDo");
-        await mongoose.connect('mongodb+srv://maiselmanwikki:Kaqbiw-decrug-nobwe0@to-do-cluster.sq0hqju.mongodb.net/toDo')
+        await mongoose.connect("mongodb://localhost:27017/toDo");
 
         const task = await TaskList.findOne(
             {
@@ -222,8 +218,7 @@ export async function getDataAboutTask(tasklistName, id) {
 
 export async function updateDataAboutTask(tasklistName, id, newData) {
     try {
-        // await mongoose.connect("mongodb://localhost:27017/toDo");
-        await mongoose.connect('mongodb+srv://maiselmanwikki:Kaqbiw-decrug-nobwe0@to-do-cluster.sq0hqju.mongodb.net/toDo')
+        await mongoose.connect("mongodb://localhost:27017/toDo");
 
         const notes = newData.note;
         const isImportant = newData.isImportant;
