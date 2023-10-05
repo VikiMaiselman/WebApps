@@ -11,57 +11,35 @@ const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}))
 
-// TASKLISTS
+// ensure database and all schemas are up 
 async function init() {
-    // ensure database and all schemas are up 
     await db.connectDatabase();
-    // get all taskLists from database
-    const allTaskLists = await db.getTaskLists();
-    // forEach and call dynamicallyAddsGetRoutesForTaskLists
-    allTaskLists.forEach((taskList) => dynamicallyAddsGetRoutesForTaskLists(taskList.name));
 }
 init();
 
 app.get('/', async (req, res) => {
-	// get all taskLists, all lists will always be displayed
 	const taskLists = await db.getTaskLists();
 	res.render('index.ejs', {allTaskLists: taskLists});
 });
-
-
-function dynamicallyAddsGetRoutesForTaskLists(taskListName) {
-	app.get(`/tasklists/${taskListName}`, async (req, res) => {
-		// get tasks from database
-		let tasks = await db.getTasksOfTaskList(taskListName);
-		res.render('index.ejs', {taskList: taskListName, tasks: tasks});
-	});
-}
 
 // TaskLists
 app.get('/tasklists/:tasklistName', async (req, res) => {
 	await getDataToRender(res, req.params.tasklistName);
 });
 
-// an <a> element that leads to post route
 app.post('/tasklists', async (req, res) => {
-	// create in database, body should contain listName, 
-	// listNames should also be unique
-	await db.createTaskList(req.body.name.toLowerCase());
-	
-	// create dynamicallyAddsGetRoutesForTaskLists
-	dynamicallyAddsGetRoutesForTaskLists(req.body.name);
-
+	// create in database, body should contain listName, listNames are unique
+	const tasklistName = req.body.name;
+	if (tasklistName === '') res.sendStatus(400);
+	await db.createTaskList(tasklistName.toLowerCase());
 	res.redirect('/tasklists/' + req.body.name);
 });
 
 
-app.post('/tasklists/delete/:name', async (req, res) => {
-	// delete from database via name (id?)
-	await db.deleteTaskList(req.params.name.toLowerCase());
+app.post('/tasklists/delete/:id', async (req, res) => {
+	await db.deleteTaskList(req.params.id);
 	res.redirect('/');
 });
-
-// update tasklistname
 
 
 // Tasks
@@ -71,13 +49,17 @@ app.post('/tasklists/:tasklistName/tasks', async (req, res) => {
 });
 
 app.post('/tasklists/:tasklistName/tasks/:id', async (req, res) => {
-	await db.updateTask(req.params.tasklistName.toLowerCase(), req.params.id, req.body.newTaskName);
-	await getDataToRender(res, req.params.tasklistName)
+	let isChecked = req.body.finished;
+	if (!isChecked) isChecked = false;
+	else isChecked = true;
+
+	await db.updateTask(req.params.tasklistName.toLowerCase(), req.params.id, req.body.newTaskName, isChecked);
+	res.redirect(`/tasklists/${req.params.tasklistName.toLowerCase()}`)
 });
 
 app.post('/tasklists/:tasklistName/tasks/delete/:id', async (req, res) => {
 	await db.deleteTask(req.params.tasklistName.toLowerCase(), req.params.id);
-	await getDataToRender(res, req.params.tasklistName)
+	res.redirect(`/tasklists/${req.params.tasklistName.toLowerCase()}`)
 });
 
 
@@ -89,7 +71,6 @@ app.get('/tasklists/:tasklistName/tasks/:id', async (req, res) => {
 
 // update info
 app.post('/tasklists/:tasklistName/tasks/:id/info', async (req, res) => {
-	console.log('GETS HIT?')
 	const taskInfo = await db.updateDataAboutTask(req.params.tasklistName.toLowerCase(), req.params.id, req.body);
 	await getDataToRender(res, req.params.tasklistName, taskInfo);
 })

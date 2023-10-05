@@ -17,6 +17,7 @@ export async function connectDatabase() {
 
         const taskSchema = new mongoose.Schema({
             name: String,
+            isChecked: Boolean,
             metadata: taskInfoSchema,
         });
 
@@ -84,7 +85,6 @@ export async function getTaskLists() {
     } finally {
         mongoose.connection.close();
     }
- 
 }
 
 export async function getTasksOfTaskList(taskListName) {
@@ -117,11 +117,11 @@ export async function createTaskList(tasklistName) {
     }
 }
 
-export async function deleteTaskList(tasklistName) {
+export async function deleteTaskList(id) {
     try {
         await mongoose.connect("mongodb://localhost:27017/toDo");
 
-        await TaskList.deleteOne({name: tasklistName});
+        await TaskList.deleteOne({_id: id});
     } catch (error) {
         console.error(error);
     } finally {
@@ -134,9 +134,6 @@ export async function deleteTaskList(tasklistName) {
 export async function createTask(tasklistName, taskName) {
     try {
         await mongoose.connect("mongodb://localhost:27017/toDo");
-       
-        // const tasklist = await TaskList.find({name: tasklistName});
-        // if (!tasklist) return;
 
         const metadata = new TaskInfo({
             isImportant: false,
@@ -157,7 +154,7 @@ export async function createTask(tasklistName, taskName) {
     }
 }
 
-export async function updateTask(tasklistName, id, newTaskName) {
+export async function updateTask(tasklistName, id, newTaskName, isChecked) {
     try {
         await mongoose.connect("mongodb://localhost:27017/toDo");
 
@@ -166,8 +163,20 @@ export async function updateTask(tasklistName, id, newTaskName) {
                 name: tasklistName,
                 'tasks._id': id,
             }, 
-            { $set: { 'tasks.$.name': newTaskName  } }
+            { $set: { 
+                'tasks.$.name': newTaskName,
+                'tasks.$.isChecked': isChecked  
+            } }
         );
+
+        // await TaskList.findOneAndUpdate(
+        //         {
+        //             name: tasklistName,
+        //             'tasks._id': id,
+        //         }, 
+        //         { $set: { 'tasks.$.isChecked': isChecked  } }
+        //     );
+    
     } catch (error) {
         console.error(error);
     } finally {

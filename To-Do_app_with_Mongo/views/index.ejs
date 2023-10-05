@@ -83,7 +83,7 @@
                             <%= allTaskLists[i].name.at(0).toUpperCase() +  allTaskLists[i].name.slice(1).split('_').join(' ')%>
 
 
-                            <form method="POST" action="/tasklists/delete/<%= allTaskLists[i].name %>">
+                            <form method="POST" action="/tasklists/delete/<%= allTaskLists[i]._id %>">
                                 <button class="btn input-group-text">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
                                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
@@ -126,7 +126,7 @@
                     <div class="list-group-item d-flex justify-content-between gap-3">
                         <div class="task">
                             <form method="POST" action="/tasklists/<%= taskList %>/tasks/<%= tasks[i]._id %>" class="d-flex gap-3">
-                                <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
+                                <input class="form-check-input flex-shrink-0" type="checkbox" value="true" name="finished" style="font-size: 1.375em;" onchange="this.form.submit()" <% if (tasks[i].isChecked) { %> checked <% } %> >
                                 <input class="task-input form-input flex-shrink-0" name="newTaskName" value="<%= tasks[i].name %>" onchange="this.form.submit()">
                             </form>
                         </div>
