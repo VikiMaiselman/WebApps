@@ -21,7 +21,7 @@
 
 
 
-## 1 Project that is a full-blown dynamic Web App 
+## Projects that are full-blown dynamic Web Apps
 ### To-Do App
 * A to-do application that allows user to create new tasks and delete them upon completion.
 * Allows some additional features such as:
@@ -40,3 +40,18 @@
     2. Returning tasks from Completed back to the original list.
     3. The ability to save notes and upload files for tasks.
   
+### To-Do App with MongoDB 
+* A logical upgrade of To-Do app with Mongo database and Node.js
+* Interactions between Node.js and MongoDB are via Mongoose package
+* Basic functionality includes an ability to create and remove task lists | get all tasks of a task list | create, update and delete tasks | get and update info on a task if needed
+* This is a separate Node.js as well as UI code, independent of the previous project. UI is implemented locally in the project with the help of EJS template language. 
+* Potential improvements: implement a separate UI with React.
+
+### UV index 
+* A small Node.js project that shows the UV Index in your location and (depending on your skin type) how much time you are allowed to be under direct sunlight without sunscreen (based on Fitzpatrick skin type classification).
+
+### Collect Coins 
+* Node.js implemented application that allows the user to collect coins based on implementing activities in different sections.
+* An example of a section could be "Sports" and an example of activity "Run 30 minutes". The user decides how much each activity "costs". 
+* On implementing successfully an activity, coins are collected. Coins are "related" to the section: each section has a unique color and coins are also of the color of the section which the completed activity belonged to.
+* 
