@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+        span {
+            font-size: 1.1rem;
+        }
+
+        input::placeholder, .create-activity {
+            font-size: 12px; /* Adjust the font size as needed */
+        }
+
+    </style>
+
+    <title>Collect Coins</title>
+</head>
+<body>
+
+    <div class="container my-1">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
+            <li class="breadcrumb-item">
+                <a class="link-body-emphasis fw-semibold text-decoration-none" href="../">Sections</a>
+              </li>
+            <li class="breadcrumb-item">
+              <a class="link-body-emphasis fw-semibold text-decoration-none" href="../wishes">Wishes</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <a class="link-body-emphasis fw-semibold text-decoration-none" href="../score">Total Score (<%= locals.totalScore %>)</a>
+            </li>
+          </ol>
+        </nav>
+      </div>
