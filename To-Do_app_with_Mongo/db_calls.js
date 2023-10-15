@@ -168,15 +168,6 @@ export async function updateTask(tasklistName, id, newTaskName, isChecked) {
                 'tasks.$.isChecked': isChecked  
             } }
         );
-
-        // await TaskList.findOneAndUpdate(
-        //         {
-        //             name: tasklistName,
-        //             'tasks._id': id,
-        //         }, 
-        //         { $set: { 'tasks.$.isChecked': isChecked  } }
-        //     );
-    
     } catch (error) {
         console.error(error);
     } finally {
