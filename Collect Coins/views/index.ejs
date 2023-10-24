@@ -9,6 +9,18 @@
             <button class="btn btn-dark rounded-pill px-3" type="submit">Add</button>
         </form>
 
+        <% if (locals.error) { %>
+            <script>
+                // Display the error as an alert
+                alert('Error: <%= error %>');
+        
+                window.onload = function() {
+                    window.location.href = '/'; 
+                };
+              </script>
+        
+        <% } %>
+
         <% if (locals.sections) { %>
             <div class="row row-cols-1 row-cols-xl-3 align-items-stretch g-4 py-5">
             

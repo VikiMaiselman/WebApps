@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 let coinModel, activityModel, sectionModel, wishesModel, colorsModel, scoreModel;
-let totalScore;
+let allCoins;
 
 export async function initDatabaseAndSchemas() {
     try {
@@ -9,6 +9,7 @@ export async function initDatabaseAndSchemas() {
         const coinSchema = new mongoose.Schema({
             color: {
                 type: String,
+                required: true,
             }, 
             value: {
                 type: Number,
@@ -51,6 +52,11 @@ export async function initDatabaseAndSchemas() {
                 type: String,
                 unique: true,
                 required: true,
+            },
+            sectionName: {
+                type: String,
+                unique: true,
+                required: true,
             }
         });
 
@@ -71,18 +77,17 @@ export async function initDatabaseAndSchemas() {
 
         for (let collection of collections) {
             if (collection.name === 'scores') {
-                totalScore = await scoreModel.find();
-                totalScore = totalScore[0];
+                allCoins = await scoreModel.find();
+                allCoins = allCoins[0];
                 isFound = true;
             }
         }
        
         if (!isFound) {
-            totalScore = new scoreModel({
+            allCoins = new scoreModel({
                 price:[],
             });
-
-            await totalScore.save();
+            await allCoins.save();
         }
     } catch(error) {
         console.error(error);
@@ -122,10 +127,38 @@ export async function createSection(dataFromUI) {
 
 export async function deleteSection(sectionId) {
     try {
+        const totalPrice = allCoins.price;
+        const section = await sectionModel.find({_id: sectionId}, {name: 1, color: 1});
+        const sectionName = section[0].name;
+        const sectionColor = section[0].color;
+    
+        for (let score of totalPrice) {
+            if (score.sectionName === sectionName && 
+                score.value > 0) throw new Error ("Impossible to delete this section, you still have its coins. Buy something.")
+        }
+
+        removeColor(sectionColor);
         await sectionModel.deleteOne({_id: sectionId});
     } catch(error) {
         console.error(error);
+        throw error;
     }
+}
+
+async function removeColor(sectionColor) {
+    try {
+        const allColors = await colorsModel.find();
+        let colorId;
+
+        for (let color of allColors) {
+            if (color.color === sectionColor) {
+                colorId = color._id;
+            }
+        }
+        await colorsModel.deleteOne({_id: colorId})
+    } catch(error) {
+        console.error(error);
+      }
 }
 
 export async function createActivityInSection(dataFromUI) {
@@ -172,12 +205,11 @@ export async function addCoinsFromActivity(sectionId, activityId, ) {
                                                      { 'activities.$': 1, name: 1 });
 
 
-         for (let coin of totalScore.price) {
+         for (let coin of allCoins.price) {
             if (coin.color === activity.activities[0].price[0].color) {
                 needNewCoin = false;
                 coin.value += activity.activities[0].price[0].value;
-                await totalScore.save();
-                console.log(totalScore);
+                await allCoins.save();
             }
         }
 
@@ -187,19 +219,18 @@ export async function addCoinsFromActivity(sectionId, activityId, ) {
                 value: activity.activities[0].price[0].value,
                 sectionName: activity.name,
             });
-            totalScore.price.push(newCoin);
-            await totalScore.save();
-            console.log(totalScore);
+            allCoins.price.push(newCoin);
+            await allCoins.save();
         }
     } catch(error) {
         console.error(error);
     }
 }
 
-export async function getScoreWithoutColors() {
+export async function getTotalScore() {
     try {
         let total = 0;
-        for (let unit of totalScore.price) {
+        for (let unit of allCoins.price) {
             total += unit.value;
         }
         return total;
@@ -208,14 +239,11 @@ export async function getScoreWithoutColors() {
     }
 }
 
-export async function getScoreByColors() {
-    try {
-        return totalScore.price;
-    } catch (error) {
-        console.error(error);
-    }
+export async function getAllCoinPrices() {
+    return allCoins.price;
 }
 
+/* ******************* W I S H E S ******************* */
 export async function getAllWishes() {
     try {
         return await wishesModel.find();
@@ -227,12 +255,8 @@ export async function getAllWishes() {
 export async function createWish(dataFromUI) {
     try {
         const allCoins = createCoins(dataFromUI.coins);
-        const newWish = new wishesModel({
-            name: dataFromUI.name,
-            price: allCoins,
-        })
+        const newWish = new wishesModel({ name: dataFromUI.name, price: allCoins })
         await newWish.save();
-
     } catch(error) {
         console.error(error);
     }
@@ -246,6 +270,46 @@ export async function deleteWish(wishId) {
     }
 }
 
+export async function accomplishWishAndDelete(wishId) {
+    try {
+        const wishObject = await wishesModel.find({_id: wishId});
+        const wishTotalPrice = wishObject[0].price;
+        const totalCoinsPrice = allCoins.price;
+
+        // 1st run - check if it is legitimate to accomplish wish
+        for (let coin of totalCoinsPrice) {
+            for (let wishSubprice of wishTotalPrice) {
+                if (coin.color === wishSubprice.color) {
+                    if (coin.value < wishSubprice.value) throw new Error("Not enough coins of one or more colors. Work harder for this wish.");
+                }
+            }
+        }
+
+        let wishPricesCounter = 0; 
+        for (let coin of totalCoinsPrice) {
+            for (let wishSubprice of wishTotalPrice) {
+                if (coin.color === wishSubprice.color) ++ wishPricesCounter; 
+            }
+        }
+
+        if (wishPricesCounter !== wishTotalPrice.length) throw new Error("Coins of some color are missing. You might have deleted the section and cannot replenish the coins from it. Consider deleting the wish and redefine it.");
+
+        // 2nd run - extract wish prices from coins' values
+        for (let coin of totalCoinsPrice) {
+            for (let wishSubprice of wishTotalPrice) {
+                if (coin.color === wishSubprice.color) {
+                    coin.value = coin.value - wishSubprice.value;
+                }
+            }
+        }
+
+        await wishesModel.deleteOne({_id: wishId});
+    } catch(error) {
+        console.error(error);
+        throw error;
+    }
+}
+
 export async function getAllColors() {
   try {
     return await colorsModel.find();
@@ -254,22 +318,13 @@ export async function getAllColors() {
   }
 }
 
-export async function addNewColor(color) {
+export async function addNewColor(color, sectionName) {
     try {
         const newColor = new colorsModel({
             color: color,
+            sectionName: sectionName
         });
-        console.log(newColor)
         await newColor.save();
-    } catch(error) {
-        console.error(error);
-      }
-}
-
-export async function removeColor(sectionId) {
-    try {
-        const color = await sectionModel.find({_id: sectionId}, {color: 1});
-        await colorsModel.deleteOne({_id: color._id})
     } catch(error) {
         console.error(error);
       }
@@ -277,17 +332,20 @@ export async function removeColor(sectionId) {
 
 export async function findSectionNameByColor(color) {
     try {
-        const sectionName = await sectionModel.find({color: color}, {name: 1});
-        console.log("sectionName", sectionName[0]);
-        return sectionName[0].name;
+        const section = await sectionModel.find({color: color}, {name: 1});
+        const sectionName = section[0].name;
+        return sectionName;
     } catch(error) {
         console.error(error);
       }
 }
 
 process.on('SIGINT', async () => {
-      await mongoose.connection.close(() => {
-      console.log('Mongoose connection is disconnected due to application termination');
-      process.exit(0);
-    });
-  });
+    try {
+        await mongoose.connection.close();
+        console.log('Mongoose connection is disconnected due to application termination');
+        process.exit(0);
+    } catch (error) {
+        console.error(error);
+    }
+});
