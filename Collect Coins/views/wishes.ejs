@@ -29,7 +29,7 @@
                         </svg>
                     </span>
                     <% const scoreOfSection = scoresByColor.find(scoreObj => scoreObj.sectionName === color.sectionName && scoreObj.color === color.color) %>
-                    <input class="form-control me-2" id="coin-value" type="text" name="values" placeholder="<%= color.sectionName%> (<%= scoreOfSection.value %> coinrss left)">
+                    <input class="form-control me-2" id="coin-value" type="text" name="values" placeholder="<%= color.sectionName%> (<%= scoreOfSection.value %> coins left)">
                 </div>
             <% } %>
         </div>
