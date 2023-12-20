@@ -112,12 +112,9 @@ a:hover {
   overflow: auto;
 }
 
-#contacts {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .contact {
-  height: 95vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* height: 95vh; */
 }
