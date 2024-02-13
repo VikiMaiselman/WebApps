@@ -14,6 +14,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles/index.css" />
+    <script src="./js/index.js" defer></script>
     <title>Document</title>
   </head>
   <body>
@@ -60,12 +61,14 @@
         <div>
           <i class="fa-solid fa-stethoscope fa-2xl" style="color: #000000"></i>
         </div>
-        <h3>Medical Doctor (Past)</h3>
+        <h3 class="contents-header">Medical Doctor (Past)</h3>
         <p>Helped people in the Internal Medicine Department for 2 years.</p>
         <p class="subtext">
           If something happens I might remember an ACLS protocol.
         </p>
+        <p class="tooltip">Tel A Shomer (Sheba) Medical Center</p>
       </div>
+     
       <div class="card">
         <div>
           <i class="fa-solid fa-computer fa-2xl" style="color: #000000"></i>
@@ -76,14 +79,16 @@
           JavaScript.
         </p>
         <p class="subtext">Java and C were my friends when I learned.</p>
+        <p class="tooltip">Kyndryl Israel</p>
       </div>
       <div class="card">
         <div>
-          <i class="fa-regular fa-dice-d20 fa-2xl" style="color: #000000"></i>
+          <i class="fa-regular fa-dice-d20 fa-2x" style="color: #000000"></i>
         </div>
-        <h3>A fast-learner (Always)</h3>
+        <h3 class="contents-header">A fast-learner (Always)</h3>
         <p>I speak fluently Hebrew, English, Spanish, Russian.</p>
         <p class="subtext">No, this is not the full list...</p>
+        <p class="tooltip">O bien podemos hablar español desde ahora..</p>
       </div>
     </section>
 
@@ -141,7 +146,7 @@
         </li>
       </ul>
 
-      <h2 class="no-margin upper-margin subtitle">Personal Projects</h2>
+      <h2 class="no-margin upper-margin section-subtitle">Personal Projects</h2>
       <h4 class="subtitle-2 header-h3">October 2022 - Now</h4>
       <h5 class="no-margin">Skills:</h5>
       <ul class="no-margin bottom-margin">
@@ -154,66 +159,88 @@
           <b>MERN Stack</b> Projects:
           <ul>
             <li>
-              <a href="https://github.com/VikiMaiselman/KeeperApp"
+              <a target="_blank" href="https://github.com/VikiMaiselman/KeeperApp"
                 ><i>Keeper App (inspired by Google Keeper)</i></a
               >
             </li>
             <li>
-              <a href="https://github.com/VikiMaiselman/ToDoApp_MernStack"
+              <a target="_blank" href="https://github.com/VikiMaiselman/ToDoApp_MernStack"
                 ><i>To-Do list</i></a
               >
             </li>
             <li>
-              <a href=" https://github.com/VikiMaiselman/FinanceTrackerWebApp"
+              <a target="_blank" href=" https://github.com/VikiMaiselman/FinanceTrackerWebApp"
                 ><i>Fiancial Tracker</i></a
               >
             </li>
           </ul>
         </li>
         <li>
-          <a href="https://github.com/VikiMaiselman/WebApps"
+          <a target="_blank" href="https://github.com/VikiMaiselman/WebApps"
             ><i>Full-blown web apps </i></a
           >with <b>Node.js & MonogoDB</b> (server-side) and JavaScript <b>templating
           language</b> (client-side)
         </li>
         <li><b>Static pages</b>
-          <a href="https://vikimaiselman.github.io/WebApps/"
+          <a target="_blank" href="https://vikimaiselman.github.io/WebApps/"
             ><i>(the browser performs any JavaScript logic directly w/o using server)</i></a
           >
         
           <ul>
             <li>
-              <a href="https://vikimaiselman.github.io/WebApps/Mapty/"
+              <a target="_blank" href="https://vikimaiselman.github.io/WebApps/Mapty/"
                 ><i>Map for registering your workouts</i></a
               >
             </li>
             <li>
-              <a href="https://vikimaiselman.github.io/WebApps/Forkify/"
+              <a target="_blank" href="https://vikimaiselman.github.io/WebApps/Forkify/"
                 ><i>Search for recipies</i></a
               >
             </li>
           </ul>
         </li>
         <li><b>React Projects</b>
-          <a href="https://github.com/VikiMaiselman/React-Projects">
+          <a target="_blank" href="https://github.com/VikiMaiselman/React-Projects">
             <i> (client-side only)</i></a
           >:
           <ul>
             <li>
               <a
-                href="https://github.com/VikiMaiselman/React-Projects/tree/main/color-palletes"
+              target="_blank" href="https://github.com/VikiMaiselman/React-Projects/tree/main/color-palletes"
                 ><i>Massive Color Palette Project</i></a
               >
             </li>
             <li>
               <a
-                href="https://github.com/VikiMaiselman/React-Projects/tree/main/yatzee"
+              target="_blank" href="https://github.com/VikiMaiselman/React-Projects/tree/main/yatzee"
                 ><i>Yahtzee game</i></a
               >
             </li>
           </ul>
         </li>
       </ul>
+
+      <button class="show-medical">Show my medical experience?</button>
+      
+      <article class="display-on-click">
+        <h2 class="upper-margin section-subtitle">Medical Doctor, Internal Medicine Residency | Sheba, Tel A Shomer Hospital</h2>
+        <h4 class="subtitle-2 header-h3">March 2021 - March 2022</h4>
+        <h5 class="no-margin">Achievemnts:</h5>
+        <ul class="no-margin">
+            <li>Diagnosed, treated and managed a broad variety of medical conditions in different clinical settings in the internal medicine ward.</li>
+            <li>Managed and treated patients in the Coronavirus Department.</br>
+            <li>Delivered presentations on the latest research papers to collegues and medical students.</li>
+        </ul>
+
+        <h2 class="upper-margin section-subtitle">Medical Intern | Sheba, Tel A Shomer Hospital</h2>
+        <h4 class="subtitle-2 header-h3">November 2019 - November 2020</h4>
+        <h5 class="no-margin">Achievemnts:</h5>
+        <ul class="no-margin">
+            <li>Completed rotations in different departments including internal medicine, neurology, surgery, ER, pediatrics and pediatric hematooncology as a medical intern.</li>
+            <li>Worked in different clinical settings with various medical teams.</br>
+            <li>Gathered information, diagnosed and prescribed treatment to patients under the supervision of senior doctors.</li>
+        </ul>
+    </article>
     </section>
 
 
@@ -230,11 +257,12 @@
 
         <h5 class="no-margin">Relevant courses:</h5>
         <ul class="no-margin">
-          <li>A well-known, educational course for learning Software Development with a focus on C and Java programming languages</li>
-          <li><b>C && JAVA</b> </li></br>
+          <li><a target="_blank" href="./assets/documents/Django-FullStack.pdf"><i>Django + Python Bootcamp</i></a></li>
+          <li><a target="_blank" href="./assets/documents/WebDevelopmentBootcamp.pdf"><i>Complete Wev Development Bootcamp</i></a></li>
+          <li><a target="_blank" href="./assets/documents/ReactColtUdemy.pdf"><i>React Bootcamp</i></a></li>
+          <li><a target="_blank" href="./assets/documents/Python-3.pdf"><i>Python Advanced</i></a></li>
+          <li><a target="_blank" href="./assets/documents/Complete JS course.pdf"><i>JS Advanced</i></a></li>
         </ul>
-  
-        
   
         <h2 class="no-margin upper-margin subtitle">First State Moscow Medical University (Sechenov University), Russia</h2>
         <h4 class="subtitle-2 header-h3">September 2012 - August 2018</h4>
@@ -351,26 +379,34 @@
           </div>
       </section>
 
-      <footer class="contents" id="contact-me">
-        <div class="card">
-            <div>
-              <i class="fa-solid fa-stethoscope fa-2xl" style="color: #000000"></i>
+      <footer class="content" id="contact-me">
+        <div>
+            <h1 class="header-h1 contact-header">Contact Me</h1>
+            <h2 class="contact-header">Victoria Maiselman</h2>
+        </div>
+        <!-- <h4 class="header-h1 contact-header">Victoria Maiselman</h4> -->
+        <div class="social-links">
+            <div class="card">
+                <div>
+                    <i class="fa-solid fa-stethoscope fa-2xl"></i>
+                </div>
+                <a href="https://www.linkedin.com/in/victoria-maiselman/"><h3>LinkedIn</h3></a>
             </div>
-           <a href="https://www.linkedin.com/in/victoria-maiselman/" style="color: #000"><h3>LinkedIn</h3></a>
-          </div>
-          <div class="card">
-            <div>
-              <i class="fa-solid fa-stethoscope fa-2xl" style="color: #000000"></i>
+            <div class="card">
+                <div>
+                <i class="fa-solid fa-stethoscope fa-2xl"></i>
+                </div>
+                <a href="mailto:maiselmanwikki@gmail.com"><h3>Email</h3></a>
             </div>
-          <a href="mailto:maiselmanwikki@gmail.com" style="color: #000"><h3>Email</h3></a>
-          </div>
-          <div class="card">
-            <div>
-              <i class="fa-solid fa-stethoscope fa-2xl" style="color: #000000"></i>
+            <div class="card">
+                <div>
+                <i class="fa-solid fa-stethoscope fa-2xl"></i>
+                </div>
+                <a href=" https://github.com/VikiMaiselman/"><h3>Github</h3></a>
             </div>
-            <a href=" https://github.com/VikiMaiselman/" style="color: #000"><h3>Github</h3></a>
+        </div>
+    </footer>
 
-          </div>
-      </footer>
+    <div style="height: 0.75vh;"></div>
   </body>
 </html>

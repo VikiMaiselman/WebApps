@@ -80,12 +80,14 @@ a:hover {
 }
 
 .card {
+  position: relative;
   max-width: 360px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0;
+  transition: all 2s ease;
 }
 
 .card p {
@@ -96,9 +98,24 @@ a:hover {
   font-size: small;
 }
 
+.tooltip {
+  display: none;
+  position: absolute;
+  top: -30px;
+  border: 1px solid #333;
+  background-color: #666;
+  min-width: max-content;
+  padding: 5px 10px;
+  color: whitesmoke;
+  font-size: 0.85rem;
+  transform: translateX(1rem);
+  opacity: 0.8;
+}
+.card:hover .tooltip {
+  display: block;
+}
+
 .content {
-  /* height: 85vh; */
-  /* width: 90%; */
   margin: 120px 60px;
   display: flex;
   flex-direction: column;
@@ -106,16 +123,38 @@ a:hover {
   justify-content: center;
   border: 0.5px solid #111;
   border-radius: 5px;
-  /* background-color: #333; */
-  /* color: #ffffff; */
   padding: 15px 30px;
+  transition: transform 1s, opacity 2s;
 }
+.hidden {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
 
 #experience {
   background-image: url("../assets/images/leone-venter-unsplash.jpg"),
     linear-gradient(to right, #f1f1f1, #e6e9ea, #e6e7e8);
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+/* set opacity to background image */
+#education {
+  position: relative;
+}
+#education::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url("../assets/images/pexels-jane-doan-1024248.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.1; /* Adjust the opacity of the background image */
+  z-index: -1; /* Ensure the pseudo-element is behind the content */
 }
 
 .no-margin {
@@ -161,7 +200,6 @@ li {
 
 .feature-description {
   font-weight: 400;
-  /* color: #111; */
   color: #350f0d;
   text-decoration: underline dotted;
 }
@@ -182,6 +220,46 @@ section a:active {
 section a:hover {
   cursor: pointer;
   color: #b2963d;
+}
+
+.display-on-click {
+  display: none;
+}
+.show-medical {
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  height: 40px;
+  padding: 5px 15px;
+  margin: 15px;
+  background-color: #b2963d;
+  color: white;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease-in-out;
+}
+.show-medical:hover {
+  background-color: #6a5a24;
+  transform: scale(1.1);
+}
+
+#contact-me {
+  height: 97vh;
+  justify-content: space-between;
+  align-items: center;
+  background-image: url("../assets/images/ales-nesetril-unsplash-background.jpg");
+  background-size: cover;
+  color: #fff;
+}
+.contact-header {
+  text-align: center;
+  margin: 50px auto;
+}
+.social-links {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 /* S K I L L S */
