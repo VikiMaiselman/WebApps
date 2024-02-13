@@ -1,5 +1,9 @@
-// show medical experience on click
+// DOM elements
 const showMedicalBtn = document.querySelector(".show-medical");
+const navigationBar = document.querySelector(".navbar");
+const header = document.querySelector(".header");
+
+// show medical experience on click
 const showMessage = "Show my medical experience?";
 const hideMessage = "Hide medical experience?";
 
@@ -11,7 +15,6 @@ showMedicalBtn.addEventListener("click", (e) => {
 });
 
 // scrolling into view
-const navigationBar = document.querySelector(".navbar");
 
 navigationBar.addEventListener("click", (e) => {
   e.preventDefault();
@@ -29,7 +32,6 @@ const sectionObserver = new IntersectionObserver(action, {
 });
 
 function action(entries) {
-  console.log(entries);
   const entry = entries[0];
   if (!entry.isIntersecting) return;
 
@@ -42,3 +44,22 @@ allSections.forEach((section) => {
   section.classList.add("hidden");
   sectionObserver.observe(section);
 });
+
+// sticky navbar
+const navbarHeight = navigationBar.getBoundingClientRect().height;
+const opts = {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navbarHeight}px`,
+};
+
+function stickyNavbarAction(entries) {
+  const entry = entries[0];
+  console.log(entries);
+
+  console.log(entry.isIntersecting);
+  if (!entry.isIntersecting) navigationBar.classList.add("sticky");
+  else navigationBar.classList.remove("sticky");
+}
+const navObserver = new IntersectionObserver(stickyNavbarAction, opts);
+navObserver.observe(header);

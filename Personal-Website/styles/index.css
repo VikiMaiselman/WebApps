@@ -3,7 +3,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: "Literata", serif;
-  height: 97vh;
+  /* height: 97vh; */
 }
 
 .navbar {
@@ -15,6 +15,12 @@ body {
   justify-content: space-between;
   align-items: center;
   text-align: center;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  opacity: 0.5;
 }
 
 .reference {
