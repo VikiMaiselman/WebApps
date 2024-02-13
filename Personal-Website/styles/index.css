@@ -127,9 +127,9 @@ a:hover {
   transition: transform 1s, opacity 2s;
 }
 .hidden {
-    opacity: 0;
-    transform: translateY(2rem);
-  }
+  opacity: 0;
+  transform: translateY(2rem);
+}
 
 #experience {
   background-image: url("../assets/images/leone-venter-unsplash.jpg"),
@@ -263,6 +263,11 @@ section a:hover {
 }
 
 /* S K I L L S */
+@media (max-width: 600px) {
+  #skills {
+    display: none;
+  }
+}
 .grid-container {
   display: grid;
   grid-template-rows: repeat(5, 1fr) 0.5fr;
