@@ -1,3 +1,12 @@
+@media (max-width: 1150px) {
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 70px 10px;
+  }
+}
+
 @media (max-width: 500px) {
   .navbar-home {
     font-size: 1rem;
@@ -20,12 +29,6 @@
     margin: 0;
   }
 
-  .header {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 70px 10px;
-  }
   .header-h1 {
     font-size: 2rem;
   }
