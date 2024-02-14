@@ -25,6 +25,10 @@
     padding: 5px 10px;
     margin: 0;
   }
+
+  .navbar-small-screen .reference[href="#skills"] {
+    display: none;
+  }
 }
 
 @media (max-width: 500px) {
