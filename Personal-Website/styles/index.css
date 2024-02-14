@@ -285,8 +285,11 @@ section a:hover {
   margin-bottom: 10px;
 }
 /* S K I L L S */
-@media (max-width: 600px) {
+@media (max-width: 1150px) {
   #skills {
+    display: none;
+  }
+  a[href="#skills"] {
     display: none;
   }
 }
