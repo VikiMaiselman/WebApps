@@ -7,10 +7,7 @@
   }
 }
 
-@media (max-width: 500px) {
-  .navbar-home {
-    font-size: 1rem;
-  }
+@media (max-width: 950px) {
   .navbar-bars-icon {
     display: inline;
   }
@@ -27,6 +24,12 @@
     font-size: 0.75rem;
     padding: 5px 10px;
     margin: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .navbar-home {
+    font-size: 1rem;
   }
 
   .header-h1 {
