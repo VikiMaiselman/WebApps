@@ -1,7 +1,9 @@
+"use strict";
 // DOM elements
 const showMedicalBtn = document.querySelector(".show-medical");
 const navigationBar = document.querySelector(".navbar");
 const header = document.querySelector(".header");
+const navbarHome = document.querySelector(".navbar-home");
 
 // show medical experience on click
 const showMessage = "Show my medical experience?";
@@ -15,7 +17,6 @@ showMedicalBtn.addEventListener("click", (e) => {
 });
 
 // scrolling into view
-
 navigationBar.addEventListener("click", (e) => {
   e.preventDefault();
   if (!e.target.classList.contains("reference")) return;
@@ -55,11 +56,25 @@ const opts = {
 
 function stickyNavbarAction(entries) {
   const entry = entries[0];
-  console.log(entries);
 
-  console.log(entry.isIntersecting);
   if (!entry.isIntersecting) navigationBar.classList.add("sticky");
   else navigationBar.classList.remove("sticky");
 }
 const navObserver = new IntersectionObserver(stickyNavbarAction, opts);
 navObserver.observe(header);
+
+// not active navbar links fading out
+const handleNavbarHover = function (e) {
+  if (!e.target.classList.contains("reference")) return;
+
+  const hoveredLink = e.target;
+  const otherLinks = hoveredLink.parentElement.querySelectorAll(".reference");
+
+  navbarHome.style.opacity = this;
+  otherLinks.forEach((link) => {
+    if (link !== hoveredLink) link.style.opacity = this;
+  });
+};
+
+navigationBar.addEventListener("mouseover", handleNavbarHover.bind(0.5));
+navigationBar.addEventListener("mouseout", handleNavbarHover.bind(1));

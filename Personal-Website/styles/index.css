@@ -22,7 +22,9 @@ body {
   top: 0;
   opacity: 0.5;
 }
-
+.navbar-home {
+  transition: all 0.2s ease-in-out;
+}
 .reference {
   padding: 10px 20px;
   margin: 10px;
