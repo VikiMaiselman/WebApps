@@ -4,6 +4,8 @@ const showMedicalBtn = document.querySelector(".show-medical");
 const navigationBar = document.querySelector(".navbar");
 const header = document.querySelector(".header");
 const navbarHome = document.querySelector(".navbar-home");
+const navbarBarsIcon = document.querySelector(".navbar-bars-icon");
+const navbarCloseIcon = document.querySelector(".navbar-close-icon");
 
 // show medical experience on click
 const showMessage = "Show my medical experience?";
@@ -78,3 +80,16 @@ const handleNavbarHover = function (e) {
 
 navigationBar.addEventListener("mouseover", handleNavbarHover.bind(0.5));
 navigationBar.addEventListener("mouseout", handleNavbarHover.bind(1));
+
+// responsive navbar
+navbarBarsIcon.addEventListener("click", (e) => {
+  navigationBar.className += " navbar-small-screen";
+  navbarBarsIcon.style.display = "none";
+  navbarCloseIcon.style.display = "inline";
+});
+
+navbarCloseIcon.addEventListener("click", (e) => {
+  navigationBar.className = "navbar";
+  navbarBarsIcon.style.display = "inline";
+  navbarCloseIcon.style.display = "none";
+});

@@ -3,7 +3,6 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: "Literata", serif;
-  /* height: 97vh; */
 }
 
 .navbar {
@@ -16,7 +15,6 @@ body {
   align-items: center;
   text-align: center;
 }
-
 .sticky {
   position: sticky;
   top: 0;
@@ -43,9 +41,12 @@ a:active {
   text-decoration: none;
   color: #fff;
 }
-
 a:hover {
   transform: scale(1.2);
+}
+.navbar-bars-icon,
+.navbar-close-icon {
+  display: none;
 }
 
 .cursive-text {

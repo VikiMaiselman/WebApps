@@ -1,0 +1,57 @@
+@media (max-width: 500px) {
+  .navbar-home {
+    font-size: 1rem;
+  }
+  .navbar-bars-icon {
+    display: inline;
+  }
+  .reference {
+    display: none;
+  }
+
+  .navbar-small-screen {
+    flex-direction: column;
+    height: auto;
+  }
+  .navbar-small-screen .reference {
+    display: block;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    margin: 0;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 70px 10px;
+  }
+  .header-h1 {
+    font-size: 2rem;
+  }
+  .header-h3,
+  .header p {
+    font-size: 0.85rem;
+  }
+
+  .content {
+    margin: 25px 5px;
+  }
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 5px;
+  }
+  .section-subtitle {
+    font-size: 1rem;
+  }
+  .subtitle-2 {
+    font-size: 0.8rem;
+  }
+
+  #contact-me {
+    height: 60vh;
+  }
+  .contact-link {
+    font-size: 0.75rem;
+  }
+}
