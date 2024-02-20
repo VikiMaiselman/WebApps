@@ -56,13 +56,12 @@ a:hover {
 
 .header {
   height: 50vh;
-  background-image: url("../assets/images/ales-nesetril-unsplash-background.jpg");
-  background-size: cover;
   color: #fff;
   text-align: center;
   padding: 80px 0 100px 0;
+  background-image: url("../assets/images/ales-nesetril-unsplash-background.jpg");
+  background-size: cover;
 }
-
 .header-h1 {
   font-size: 3.25rem;
 }
@@ -272,6 +271,9 @@ section a:hover {
   align-items: center;
   justify-content: space-around;
 }
+.contact-link {
+  text-align: center;
+}
 
 .copyright {
   text-align: center;
@@ -284,6 +286,7 @@ section a:hover {
   color: #555;
   margin-bottom: 10px;
 }
+
 /* S K I L L S */
 @media (max-width: 1150px) {
   #skills {
